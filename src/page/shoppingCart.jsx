@@ -10,13 +10,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { store } from "../store";
 import products from "../data/db";
 import Grid from "@mui/material/Grid";
+import styles from "./shoppingCart.module.css";
 
 import {
   increment,
   decrease,
-  addQuantityCartShopping,
   reduceQuantityCartShopping,
-  addItemToCart,
   removeItemToCart,
 } from "../state";
 import { useEffect, useState } from "react";
@@ -27,7 +26,8 @@ export default function shoppingCart() {
       return state.quantity.shoppingCarts;
     })
   );
-
+  var t;
+  const [total, setTotal] = useState(0); //(state) => state.quantity.total
   const dispatch = useDispatch();
   function removeFromCart(id) {
     dispatch(reduceQuantityCartShopping());
@@ -68,10 +68,25 @@ export default function shoppingCart() {
     if (arrayExisti == null) setShoppingCarts(shoppingCarts);
     else setShoppingCarts(JSON.parse(arrayExisti));
   }, []);
+  useEffect(() => {
+    var total = shoppingCarts
+      .map((item) => {
+        return (
+          products.find((M) => {
+            return M.id == item.id;
+          }).price * item.quantity
+        );
+      })
+      .reduce((accumulator, currentValue) => {
+        return accumulator + currentValue;
+      }, 0);
+    setTotal(total);
+  }, [shoppingCarts]);
   return (
     <>
       <Container>
         <Box sx={{ display: "flex", justifyContent: "center" }}>
+          {total}
           {shoppingCarts.length == 0 ? (
             <div sx={{ m: 5 }}>No product in cart</div>
           ) : (
@@ -99,38 +114,44 @@ export default function shoppingCart() {
                         return itemA.id == item.id ? itemA.title : null;
                       })}
                     </Typography>
+                    <Typography
+                      gutterBottom
+                      variant="subtitle2"
+                      component="div"
+                    >
+                      {products.map((itemCart) => {
+                        return itemCart.id == item.id ? itemCart.price : null;
+                      })}
+                    </Typography>
                   </CardContent>
                   <CardActions
                     sx={{ display: "flex", justifyContent: "center" }}
                   >
                     <Box sx={{ display: "flex", justifyContent: "center" }}>
                       <Button
+                        className={styles.bgColorPrimery}
                         variant="contained"
                         size="small"
-                        sx={{ padding: 0, backgroundColor: "#4e6378" }}
+                        sx={{ padding: 0 }}
                         onClick={() => handleDecrease(item.id)}
                       >
                         -
                       </Button>
-                      <Box mx={1}>
-                        {shoppingCarts.map((itemCart) => {
-                          return itemCart.id == item.id
-                            ? itemCart.quantity
-                            : null;
-                        })}
-                      </Box>
+                      <Box mx={1}>{item.quantity}</Box>
                       <Button
+                        className={styles.bgColorPrimery}
                         variant="contained"
                         size="small"
-                        sx={{ padding: 0, backgroundColor: "#4e6378" }}
+                        sx={{ padding: 0 }}
                         onClick={() => handleIncrement(item.id)}
                       >
                         +
                       </Button>
 
                       <Button
+                        className={styles.bgColorPrimery}
                         variant="contained"
-                        sx={{ mx: 1, backgroundColor: "#4e6378" }}
+                        sx={{ mx: 1 }}
                         size="small"
                         onClick={() => removeFromCart(item.id)}
                       >

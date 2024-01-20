@@ -19,6 +19,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
+import styles from "./home.module.css";
 
 export default function home() {
   //   const quantity = useSelector((state) => state.quantity.value);
@@ -115,9 +116,10 @@ export default function home() {
                     {shoppingCarts.map((item) => item.id).includes(item.id) ? (
                       <Box sx={{ display: "flex", justifyContent: "center" }}>
                         <Button
+                          className={styles.bgColorPrimery}
                           variant="contained"
                           size="small"
-                          sx={{ padding: 0, backgroundColor: "#4e6378" }}
+                          sx={{ padding: 0 }}
                           onClick={() => handleDecrease(item.id)}
                         >
                           -
@@ -130,17 +132,19 @@ export default function home() {
                           })}
                         </Box>
                         <Button
+                          className={styles.bgColorPrimery}
                           variant="contained"
                           size="small"
-                          sx={{ padding: 0, backgroundColor: "#4e6378" }}
+                          sx={{ padding: 0 }}
                           onClick={() => handleIncrement(item.id)}
                         >
                           +
                         </Button>
 
                         <Button
+                          className={styles.bgColorPrimery}
                           variant="contained"
-                          sx={{ mx: 1, backgroundColor: "#4e6378" }}
+                          sx={{ mx: 1 }}
                           size="small"
                           onClick={() => removeFromCart(item.id)}
                         >
@@ -149,8 +153,9 @@ export default function home() {
                       </Box>
                     ) : (
                       <Button
+                        className={styles.bgColorPrimery}
                         variant="contained"
-                        sx={{ mx: 2, backgroundColor: "#4e6378" }}
+                        sx={{ mx: 2 }}
                         onClick={() => handleAddToCart(item.id)}
                       >
                         Add to card

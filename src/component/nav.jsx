@@ -72,7 +72,7 @@ export default function nav() {
     <>
       <AppBar position="static" sx={{ backgroundColor: "#4e6378" }}>
         <Toolbar sx={{ backgroundColor: "#4e6378" }}>
-          <React.Fragment>
+          <>
             <IconButton
               size="large"
               edge="start"
@@ -91,7 +91,7 @@ export default function nav() {
             >
               {list()}
             </SwipeableDrawer>
-          </React.Fragment>
+          </>
           <Typography
             variant="h6"
             noWrap
