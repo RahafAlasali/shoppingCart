@@ -1,3 +1,11 @@
 .bgColorPrimery {
     background-color: #4e6378 !important;
 }
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #4e6378;
+    border-radius: 10px;
+}

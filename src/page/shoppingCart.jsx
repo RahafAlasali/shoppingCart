@@ -19,6 +19,7 @@ import {
   removeItemToCart,
 } from "../state";
 import { useEffect, useState } from "react";
+import { Margin } from "@mui/icons-material";
 
 export default function shoppingCart() {
   const [shoppingCarts, setShoppingCarts] = useState(
@@ -84,85 +85,84 @@ export default function shoppingCart() {
   }, [shoppingCarts]);
   return (
     <>
-      <Container>
-        <Box sx={{ display: "flex", justifyContent: "center" }}>
-          {total}
-          {shoppingCarts.length == 0 ? (
-            <div sx={{ m: 5 }}>No product in cart</div>
-          ) : (
-            <Grid spacing={2}>
-              <Grid item xs={12} sm={6} md={2} lg={3}></Grid>
-              {shoppingCarts.map((item) => (
-                <Card
-                  key={item.id}
-                  sx={{
-                    maxWidth: 275,
-                    minWidth: 275,
-                    minHeight: 300,
-                    m: 3,
-                    display: "inline-block",
-                  }}
+      <Container maxWidth="lg" sx={{ mb: 5 }}>
+        <Box sx={{ m: 5 }}>
+          {shoppingCarts.map((item) => (
+            <Box
+              key={item.id}
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                maxHeight: "150px",
+                alignItems: "center",
+                marginTop: "15px",
+                backgroundColor: "#e3dede",
+              }}
+            >
+              <Box>
+                <img src="https://picsum.photos/200/150"></img>
+              </Box>
+              <Box>
+                <Typography>Title</Typography>
+                <Typography variant="subtitle2" component="div">
+                  {products.map((itemA) => {
+                    return itemA.id == item.id ? itemA.title : null;
+                  })}
+                </Typography>
+              </Box>
+              <Box>
+                <Typography>Price</Typography>
+                <Typography
+                  variant="subtitle2"
+                  component="div"
+                  sx={{ margin: "auto" }}
                 >
-                  <CardMedia
-                    sx={{ height: 140 }}
-                    image="https://picsum.photos/200/300"
-                    title="green iguana"
-                  />
-                  <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
-                      {products.map((itemA) => {
-                        return itemA.id == item.id ? itemA.title : null;
-                      })}
-                    </Typography>
-                    <Typography
-                      gutterBottom
-                      variant="subtitle2"
-                      component="div"
-                    >
-                      {products.map((itemCart) => {
-                        return itemCart.id == item.id ? itemCart.price : null;
-                      })}
-                    </Typography>
-                  </CardContent>
-                  <CardActions
-                    sx={{ display: "flex", justifyContent: "center" }}
-                  >
-                    <Box sx={{ display: "flex", justifyContent: "center" }}>
-                      <Button
-                        className={styles.bgColorPrimery}
-                        variant="contained"
-                        size="small"
-                        sx={{ padding: 0 }}
-                        onClick={() => handleDecrease(item.id)}
-                      >
-                        -
-                      </Button>
-                      <Box mx={1}>{item.quantity}</Box>
-                      <Button
-                        className={styles.bgColorPrimery}
-                        variant="contained"
-                        size="small"
-                        sx={{ padding: 0 }}
-                        onClick={() => handleIncrement(item.id)}
-                      >
-                        +
-                      </Button>
+                  {products.map((itemCart) => {
+                    return itemCart.id == item.id ? itemCart.price : null;
+                  })}
+                </Typography>
+              </Box>
+              <Box>
+                <Typography>Quantity</Typography>
+                <Typography variant="subtitle2" component="div">
+                  {item.quantity}
+                </Typography>
+              </Box>
+              <div>
+                <Button
+                  className={styles.bgColorPrimery}
+                  variant="contained"
+                  size="small"
+                  sx={{ mx: 1 }}
+                  onClick={() => handleDecrease(item.id)}
+                >
+                  -
+                </Button>
+                <Button
+                  className={styles.bgColorPrimery}
+                  variant="contained"
+                  size="small"
+                  sx={{ mx: 1 }}
+                  onClick={() => handleIncrement(item.id)}
+                >
+                  +
+                </Button>
 
-                      <Button
-                        className={styles.bgColorPrimery}
-                        variant="contained"
-                        sx={{ mx: 1 }}
-                        size="small"
-                        onClick={() => removeFromCart(item.id)}
-                      >
-                        remove
-                      </Button>
-                    </Box>
-                  </CardActions>
-                </Card>
-              ))}
-            </Grid>
-          )}
+                <Button
+                  className={styles.bgColorPrimery}
+                  variant="contained"
+                  sx={{ mx: 1 }}
+                  size="small"
+                  onClick={() => removeFromCart(item.id)}
+                >
+                  remove
+                </Button>
+              </div>
+            </Box>
+          ))}
+        </Box>
+        <Box sx={{ display: "flex", justifyContent: "end" }}>
+          Total : {total}
         </Box>
       </Container>
     </>
