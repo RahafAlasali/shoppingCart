@@ -9,8 +9,6 @@ import Box from "@mui/material/Box";
 import { useSelector, useDispatch } from "react-redux";
 import { store } from "../store";
 import products from "../data/db";
-import Grid from "@mui/material/Grid";
-import styles from "./shoppingCart.module.css";
 
 import {
   increment,
@@ -19,7 +17,6 @@ import {
   removeItemToCart,
 } from "../state";
 import { useEffect, useState } from "react";
-import { Margin } from "@mui/icons-material";
 
 export default function shoppingCart() {
   const [shoppingCarts, setShoppingCarts] = useState(
@@ -130,7 +127,6 @@ export default function shoppingCart() {
               </Box>
               <div>
                 <Button
-                  className={styles.bgColorPrimery}
                   variant="contained"
                   size="small"
                   sx={{ mx: 1 }}
@@ -139,7 +135,6 @@ export default function shoppingCart() {
                   -
                 </Button>
                 <Button
-                  className={styles.bgColorPrimery}
                   variant="contained"
                   size="small"
                   sx={{ mx: 1 }}
@@ -149,7 +144,6 @@ export default function shoppingCart() {
                 </Button>
 
                 <Button
-                  className={styles.bgColorPrimery}
                   variant="contained"
                   sx={{ mx: 1 }}
                   size="small"

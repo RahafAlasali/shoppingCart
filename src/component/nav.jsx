@@ -70,8 +70,8 @@ export default function nav() {
   );
   return (
     <>
-      <AppBar position="static" sx={{ backgroundColor: "#4e6378" }}>
-        <Toolbar sx={{ backgroundColor: "#4e6378" }}>
+      <AppBar position="static">
+        <Toolbar>
           <>
             <IconButton
               size="large"
@@ -121,7 +121,7 @@ export default function nav() {
               component={Link}
               to="/cart"
             >
-              <Badge badgeContent={quantityCart} color="primary">
+              <Badge badgeContent={quantityCart} color="secondary">
                 <ShoppingCartIcon />
               </Badge>
             </IconButton>
