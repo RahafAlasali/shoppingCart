@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import Container from "@mui/material/Container";
@@ -14,13 +14,14 @@ import {
   addItemToCart,
   removeItemToCart,
 } from "../state";
-import products from "../data/db.js";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
+import axios from "axios";
 
 export default function home() {
+  const [products, setProducts] = useState([]);
   //   const quantity = useSelector((state) => state.quantity.value);
   const [shoppingCarts, setShoppingCarts] = useState(
     useSelector((state) => {
@@ -30,6 +31,14 @@ export default function home() {
   const dispatch = useDispatch();
   //   const [addToCart, setAddToCart] = useState(false);
   useEffect(() => {
+    axios
+      .get("http://localhost:8000/products")
+      .then((response) => {
+        setProducts(response.data);
+        console.log("response", response);
+      })
+      .catch((error) => {})
+      .finally(() => {});
     var productsLocal = JSON.parse(localStorage.getItem("products"));
     if (productsLocal == null) setShoppingCarts([]);
     else setShoppingCarts(productsLocal);

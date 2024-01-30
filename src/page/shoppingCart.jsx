@@ -1,14 +1,10 @@
 import Container from "@mui/material/Container";
-import Card from "@mui/material/Card";
-import CardMedia from "@mui/material/CardMedia";
-import CardContent from "@mui/material/CardContent";
-import CardActions from "@mui/material/CardActions";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { useSelector, useDispatch } from "react-redux";
 import { store } from "../store";
-import products from "../data/db";
+import axios from "axios";
 
 import {
   increment,
@@ -19,6 +15,7 @@ import {
 import { useEffect, useState } from "react";
 
 export default function shoppingCart() {
+  const [products, setProducts] = useState([]);
   const [shoppingCarts, setShoppingCarts] = useState(
     useSelector((state) => {
       return state.quantity.shoppingCarts;
@@ -51,7 +48,6 @@ export default function shoppingCart() {
     //// update
     // update store then localStorge with same value from store
     //  localStorage.setItem("products", JSON.stringify()) From store
-
     var productsLocal = JSON.parse(localStorage.getItem("products"));
     var t = productsLocal.map((item) =>
       item.id == id ? { ...item, quantity: item.quantity - 1 } : item
@@ -62,22 +58,39 @@ export default function shoppingCart() {
 
   const subscribe = store.subscribe(() => console.log("The state is update"));
   useEffect(() => {
+    const getDatas = async () => {
+      const response = await fetch("http://localhost:8000/products");
+      const data = await response.json();
+      console.log("data", data);
+      setProducts(data);
+    };
+    getDatas();
+    // axios
+    //   .get("http://localhost:8000/products")
+    //   .then((response) => {
+    //     setProducts(response.data);
+    //   })
+    //   .catch((error) => {})
+    //   .finally(() => {});
     var arrayExisti = localStorage.getItem("products");
     if (arrayExisti == null) setShoppingCarts(shoppingCarts);
     else setShoppingCarts(JSON.parse(arrayExisti));
   }, []);
   useEffect(() => {
+    console.log("products", products);
     var total = shoppingCarts
       .map((item) => {
         return (
           products.find((M) => {
+            console.log(M);
             return M.id == item.id;
-          }).price * item.quantity
+          })?.price * item.quantity
         );
       })
       .reduce((accumulator, currentValue) => {
         return accumulator + currentValue;
       }, 0);
+    console.log("ljijijjkl", total);
     setTotal(total);
   }, [shoppingCarts]);
   return (
