@@ -55,34 +55,35 @@ export default function shoppingCart() {
     localStorage.setItem("products", JSON.stringify(t)); //
     setShoppingCarts(t);
   }
+  console.log("rerender ...");
 
+  // products.map((item) => console.log(item));
   const subscribe = store.subscribe(() => console.log("The state is update"));
   useEffect(() => {
-    const getDatas = async () => {
-      const response = await fetch("http://localhost:8000/products");
-      const data = await response.json();
-      console.log("data", data);
-      setProducts(data);
-    };
-    getDatas();
-    // axios
-    //   .get("http://localhost:8000/products")
-    //   .then((response) => {
-    //     setProducts(response.data);
-    //   })
-    //   .catch((error) => {})
-    //   .finally(() => {});
-    var arrayExisti = localStorage.getItem("products");
-    if (arrayExisti == null) setShoppingCarts(shoppingCarts);
-    else setShoppingCarts(JSON.parse(arrayExisti));
+    (async () => {
+      const getDatas = async () => {
+        const response = await fetch("http://localhost:8000/products");
+        const data = await response.json();
+        console.log("data", data);
+
+        setProducts(data);
+      };
+
+      await getDatas();
+
+      var arrayExisti = localStorage.getItem("products");
+      if (arrayExisti == null) setShoppingCarts(shoppingCarts);
+      else setShoppingCarts(JSON.parse(arrayExisti));
+
+      console.log("jsdlkfjdslk");
+    })();
   }, []);
   useEffect(() => {
-    console.log("products", products);
+    console.log("shoppingCarts");
     var total = shoppingCarts
       .map((item) => {
         return (
           products.find((M) => {
-            console.log(M);
             return M.id == item.id;
           })?.price * item.quantity
         );
@@ -90,7 +91,7 @@ export default function shoppingCart() {
       .reduce((accumulator, currentValue) => {
         return accumulator + currentValue;
       }, 0);
-    console.log("ljijijjkl", total);
+
     setTotal(total);
   }, [shoppingCarts]);
   return (
