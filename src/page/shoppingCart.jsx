@@ -5,6 +5,7 @@ import Box from "@mui/material/Box";
 import { useSelector, useDispatch } from "react-redux";
 import { store } from "../store";
 import axios from "axios";
+// import imgBook from "../imgs/book.jpg";
 
 import {
   increment,
@@ -110,9 +111,18 @@ export default function shoppingCart() {
                 backgroundColor: "#e3dede",
               }}
             >
-              <Box>
-                <img src="https://picsum.photos/200/150"></img>
-              </Box>
+              {products.map((itemCart) => {
+                return itemCart.id == item.id ? (
+                  <Box>
+                    <img
+                      src={process.env.PUBLIC_URL + itemCart.img}
+                      height={130}
+                      width={130}
+                    ></img>
+                  </Box>
+                ) : null;
+              })}
+
               <Box>
                 <Typography>Title</Typography>
                 <Typography variant="subtitle2" component="div">
