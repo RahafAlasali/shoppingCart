@@ -20,9 +20,9 @@ export default function App() {
       <ThemeProvider theme={theme}>
         <Nav />
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/cart" element={<Shoppingcart />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/react-shoppingCart" element={<Home />} />
+          <Route path="/react-shoppingCart/cart" element={<Shoppingcart />} />
+          <Route path="/react-shoppingCart/dashboard" element={<Dashboard />} />
         </Routes>
       </ThemeProvider>
     </>
