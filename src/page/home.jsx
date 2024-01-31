@@ -75,6 +75,7 @@ export default function home() {
     localStorage.setItem("products", JSON.stringify(t));
     setShoppingCarts(t);
   }
+  console.log("sting");
   function handleDecrease(id) {
     dispatch(decrease(id));
     var productsLocal = JSON.parse(localStorage.getItem("products"));
