@@ -104,7 +104,7 @@ export default function home() {
                 >
                   <CardMedia
                     sx={{ height: 140 }}
-                    image={process.env.PUBLIC_URL + item.img}
+                    image={item.img}
                     title="green iguana"
                   />
                   <CardContent>
