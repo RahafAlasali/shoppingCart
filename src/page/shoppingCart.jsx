@@ -56,31 +56,21 @@ export default function shoppingCart() {
     localStorage.setItem("products", JSON.stringify(t)); //
     setShoppingCarts(t);
   }
-  console.log("rerender ...");
-
-  // products.map((item) => console.log(item));
   const subscribe = store.subscribe(() => console.log("The state is update"));
   useEffect(() => {
-    (async () => {
-      const getDatas = async () => {
-        const response = await fetch("http://localhost:8000/products");
-        const data = await response.json();
-        console.log("data", data);
-
+    axios
+      .get("http://localhost:8000/products")
+      .then((res) => {
+        return res.data;
+      })
+      .then((data) => {
         setProducts(data);
-      };
-
-      await getDatas();
-
-      var arrayExisti = localStorage.getItem("products");
-      if (arrayExisti == null) setShoppingCarts(shoppingCarts);
-      else setShoppingCarts(JSON.parse(arrayExisti));
-
-      console.log("jsdlkfjdslk");
-    })();
+        var arrayExisti = localStorage.getItem("products");
+        if (arrayExisti == null) setShoppingCarts(shoppingCarts);
+        else setShoppingCarts(JSON.parse(arrayExisti));
+      });
   }, []);
   useEffect(() => {
-    console.log("shoppingCarts");
     var total = shoppingCarts
       .map((item) => {
         return (
@@ -92,12 +82,14 @@ export default function shoppingCart() {
       .reduce((accumulator, currentValue) => {
         return accumulator + currentValue;
       }, 0);
-
     setTotal(total);
   }, [shoppingCarts]);
   return (
     <>
       <Container maxWidth="lg" sx={{ mb: 5 }}>
+        <Typography variant="h4" component="div" sx={{ m: 5 }}>
+          My Cart
+        </Typography>
         <Box sx={{ m: 5 }}>
           {shoppingCarts.map((item) => (
             <Box

@@ -34,14 +34,16 @@ export default function home() {
     axios
       .get("http://localhost:8000/products")
       .then((response) => {
-        setProducts(response.data);
-        console.log("response", response);
+        return response.data;
+      })
+      .then((data) => {
+        setProducts(data);
+        var productsLocal = JSON.parse(localStorage.getItem("products"));
+        if (productsLocal == null) setShoppingCarts([]);
+        else setShoppingCarts(productsLocal);
       })
       .catch((error) => {})
       .finally(() => {});
-    var productsLocal = JSON.parse(localStorage.getItem("products"));
-    if (productsLocal == null) setShoppingCarts([]);
-    else setShoppingCarts(productsLocal);
   }, []);
   function handleAddToCart(id) {
     dispatch(addQuantityCartShopping());
@@ -75,7 +77,6 @@ export default function home() {
     localStorage.setItem("products", JSON.stringify(t));
     setShoppingCarts(t);
   }
-  console.log("sting");
   function handleDecrease(id) {
     dispatch(decrease(id));
     var productsLocal = JSON.parse(localStorage.getItem("products"));
