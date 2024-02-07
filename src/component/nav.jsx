@@ -102,10 +102,20 @@ export default function nav() {
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
           <Box>
-            <Button component={Link} to="/" color="inherit" sx={{ mx: 2 }}>
+            <Button
+              component={Link}
+              to="/shoppingCart"
+              color="inherit"
+              sx={{ mx: 2 }}
+            >
               Home
             </Button>
-            <Button color="inherit" component={Link} to="/cart" sx={{ mx: 2 }}>
+            <Button
+              color="inherit"
+              component={Link}
+              to="/shoppingCart/cart"
+              sx={{ mx: 2 }}
+            >
               Cart
             </Button>
 
