@@ -59,7 +59,7 @@ export default function shoppingCart() {
   const subscribe = store.subscribe(() => console.log("The state is update"));
   useEffect(() => {
     axios
-      .get("https://rahafalasali.github.io/shoppingCart/db.json")
+      .get("https://rahafalasali.github.io/shoppingCart/db.json/products")
       .then((res) => {
         return res.data;
       })

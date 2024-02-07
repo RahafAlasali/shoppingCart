@@ -32,7 +32,7 @@ export default function home() {
   //   const [addToCart, setAddToCart] = useState(false);
   useEffect(() => {
     axios
-      .get("https://rahafalasali.github.io/shoppingCart/db.json")
+      .get("https://rahafalasali.github.io/shoppingCart/db.json/products")
       .then((response) => {
         return response.data;
       })
