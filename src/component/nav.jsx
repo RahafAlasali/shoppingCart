@@ -43,9 +43,9 @@ export default function nav() {
     setState({ ...state, ["left"]: open });
   };
   let listNav = [
-    { title: "Home", link: "/" },
-    { title: "Cart", link: "/cart" },
-    { title: "Dashboard", link: "/dashboard" },
+    { title: "Home", link: "/shoppingCart" },
+    { title: "Cart", link: "/shoppingCart/cart" },
+    { title: "Dashboard", link: "/shoppingCart/dashboard" },
   ];
   const list = () => (
     <Box
@@ -108,9 +108,7 @@ export default function nav() {
             <Button color="inherit" component={Link} to="/cart" sx={{ mx: 2 }}>
               Cart
             </Button>
-            <Button color="inherit" sx={{ mx: 2 }}>
-              About
-            </Button>
+
             <Button color="inherit" sx={{ mx: 2 }}>
               About
             </Button>
@@ -121,7 +119,7 @@ export default function nav() {
               size="large"
               color="inherit"
               component={Link}
-              to="/cart"
+              to="/shoppingCart/cart"
             >
               <Badge badgeContent={quantityCart} color="secondary">
                 <ShoppingCartIcon />
