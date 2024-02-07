@@ -108,7 +108,9 @@ export default function nav() {
             <Button color="inherit" component={Link} to="/cart" sx={{ mx: 2 }}>
               Cart
             </Button>
-
+            <Button color="inherit" sx={{ mx: 2 }}>
+              About
+            </Button>
             <Button color="inherit" sx={{ mx: 2 }}>
               About
             </Button>
