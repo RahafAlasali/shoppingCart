@@ -32,7 +32,7 @@ export default function home() {
   //   const [addToCart, setAddToCart] = useState(false);
   useEffect(() => {
     axios
-      .get(process.env.PUBLIC_URL + "/db.json")
+      .get("https://rahafalasali.github.io/shoppingCart/db.json")
       .then((response) => {
         return response.data;
       })
@@ -44,7 +44,6 @@ export default function home() {
       })
       .catch((error) => {})
       .finally(() => {});
-    console.log(process.env.PUBLIC_URL);
   }, []);
   function handleAddToCart(id) {
     dispatch(addQuantityCartShopping());
