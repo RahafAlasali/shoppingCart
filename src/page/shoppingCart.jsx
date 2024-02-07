@@ -59,9 +59,9 @@ export default function shoppingCart() {
   const subscribe = store.subscribe(() => console.log("The state is update"));
   useEffect(() => {
     axios
-      .get("https://rahafalasali.github.io/shoppingCart/db.json/products")
+      .get("https://rahafalasali.github.io/shoppingCart/db.json")
       .then((res) => {
-        return res.data;
+        return res.data.products;
       })
       .then((data) => {
         setProducts(data);
