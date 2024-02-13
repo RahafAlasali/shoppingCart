@@ -19,7 +19,7 @@ export default function App() {
     <>
       <ThemeProvider theme={theme}>
         <Nav />
-        <Routes>
+        <Routes basename="/shoppingCart">
           <Route path="/shoppingCart" element={<Home />} />
           <Route path="/shoppingCart/cart" element={<Shoppingcart />} />
           <Route path="/shoppingCart/dashboard" element={<Dashboard />} />
