@@ -40,7 +40,7 @@ export default function nav() {
       return;
     }
 
-    setState({ ...state, ["left"]: open });
+    setState({ ...state, [anchor]: open });
   };
   let listNav = [
     { title: "Home", link: "/shoppingCart" },
@@ -91,15 +91,33 @@ export default function nav() {
             >
               {list()}
             </SwipeableDrawer>
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="open drawer"
+              sx={{ mr: 2 }}
+              onClick={toggleDrawer("right", true)}
+            >
+              Right
+            </IconButton>
+            <SwipeableDrawer
+              anchor={"right"}
+              open={state["right"]}
+              onClose={toggleDrawer("right", false)}
+              onOpen={toggleDrawer("right", true)}
+            >
+              {list("right")}
+            </SwipeableDrawer>
           </>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ display: { xs: "none", sm: "block" } }}
+          <Button
+            component={Link}
+            to="/shoppingCart"
+            color="inherit"
+            sx={{ mx: 2 }}
           >
             Shopping
-          </Typography>
+          </Button>
           <Box sx={{ flexGrow: 1 }} />
           <Box>
             <Button

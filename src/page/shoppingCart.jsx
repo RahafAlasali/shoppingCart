@@ -170,9 +170,12 @@ export default function shoppingCart() {
               </div>
             </Box>
           ))}
-        </Box>
-        <Box sx={{ display: "flex", justifyContent: "end" }}>
-          Total : {total}
+          <Box sx={{ display: "flex", justifyContent: "end", mt: 2 }}>
+            <Typography variant="h5" sx={{ mx: 1 }}>
+              Total : {total}
+            </Typography>
+            <Button variant="contained">checkout</Button>
+          </Box>
         </Box>
       </Container>
     </>
