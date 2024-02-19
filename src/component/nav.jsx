@@ -16,6 +16,11 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
+import Divider from "@mui/material/Divider";
+import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
+import CloseIcon from "@mui/icons-material/Close";
+import Icon from "@mui/material/Icon";
+import PersonIcon from "@mui/icons-material/Person";
 
 export default function nav() {
   const quantityCartA = useSelector(
@@ -68,6 +73,84 @@ export default function nav() {
       </List>
     </Box>
   );
+  const cartDrawer = () => (
+    <>
+      <Box minWidth={250} p={4}>
+        <Box>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+            }}
+          >
+            <Typography gutterBottom variant="h6">
+              <Box pb={2}>Shopping Cart</Box>
+            </Typography>
+            <Icon onClick={toggleDrawer("right", false)}>
+              <CloseIcon />
+            </Icon>
+          </Box>
+          <Divider />
+          <Box
+            py={4}
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "start",
+                alignItems: "center",
+              }}
+            >
+              <img
+                src={process.env.PUBLIC_URL + "/imgs/product-1.png"}
+                height={75}
+                width={75}
+              ></img>
+              <Typography paddingX={1}>Title</Typography>
+            </Box>
+            <Icon>
+              <CancelOutlinedIcon />
+            </Icon>
+          </Box>
+          <Divider />
+          <Box py={2} sx={{ display: "flex", justifyContent: "space-between" }}>
+            <Typography>Subtotal</Typography>
+            <Typography> 1000</Typography>
+          </Box>
+          <Divider />
+        </Box>
+        <Box>
+          <Box>
+            <Button
+              variant="contained"
+              size="large"
+              sx={{ padding: 1, paddingX: 1, marginTop: 2, minWidth: 250 }}
+              component={Link}
+              to="/shoppingCart/cart"
+              onClick={toggleDrawer("right", false)}
+            >
+              View Cart
+            </Button>
+          </Box>
+          <Box>
+            <Button
+              variant="contained"
+              size="large"
+              sx={{ padding: 1, paddingX: 1, marginTop: 2, minWidth: 250 }}
+              component={Link}
+            >
+              checkout
+            </Button>
+          </Box>
+        </Box>
+      </Box>
+    </>
+  );
   return (
     <>
       <AppBar position="static">
@@ -90,24 +173,6 @@ export default function nav() {
               onOpen={toggleDrawer("left", true)}
             >
               {list()}
-            </SwipeableDrawer>
-            <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="open drawer"
-              sx={{ mr: 2 }}
-              onClick={toggleDrawer("right", true)}
-            >
-              Right
-            </IconButton>
-            <SwipeableDrawer
-              anchor={"right"}
-              open={state["right"]}
-              onClose={toggleDrawer("right", false)}
-              onOpen={toggleDrawer("right", true)}
-            >
-              {list("right")}
             </SwipeableDrawer>
           </>
           <Button
@@ -142,17 +207,27 @@ export default function nav() {
             </Button>
           </Box>
           <Box sx={{ flexGrow: 1 }} />
+          <IconButton size="large" color="inherit">
+            <PersonIcon />
+          </IconButton>
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <IconButton
               size="large"
               color="inherit"
-              component={Link}
-              to="/shoppingCart/cart"
+              onClick={toggleDrawer("right", true)}
             >
               <Badge badgeContent={quantityCart} color="secondary">
                 <ShoppingCartIcon />
               </Badge>
             </IconButton>
+            <SwipeableDrawer
+              anchor={"right"}
+              open={state["right"]}
+              onClose={toggleDrawer("right", false)}
+              onOpen={toggleDrawer("right", true)}
+            >
+              {cartDrawer()}
+            </SwipeableDrawer>
           </Box>
         </Toolbar>
       </AppBar>
