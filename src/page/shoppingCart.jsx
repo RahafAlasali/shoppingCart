@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { store } from "../store";
 import axios from "axios";
 // import imgBook from "../imgs/book.jpg";
+import Divider from "@mui/material/Divider";
 
 import {
   increment,
@@ -88,87 +89,89 @@ export default function shoppingCart() {
     <>
       <Container maxWidth="lg" sx={{ mb: 5 }}>
         <Typography variant="h4" component="div" sx={{ m: 5 }}>
-          My Cart
+          Cart
         </Typography>
         <Box sx={{ m: 5 }}>
           {shoppingCarts.map((item) => (
-            <Box
-              key={item.id}
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                maxHeight: "150px",
-                alignItems: "center",
-                marginTop: "15px",
-                backgroundColor: "#e3dede",
-              }}
-            >
-              {products.map((itemCart) => {
-                return itemCart.id == item.id ? (
-                  <Box>
-                    <img
-                      src={process.env.PUBLIC_URL + itemCart.img}
-                      height={130}
-                      width={130}
-                    ></img>
-                  </Box>
-                ) : null;
-              })}
+            <>
+              <Box
+                key={item.id}
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  maxHeight: "150px",
+                  alignItems: "center",
+                  marginY: "15px",
+                }}
+              >
+                {products.map((itemCart) => {
+                  return itemCart.id == item.id ? (
+                    <Box>
+                      <img
+                        src={process.env.PUBLIC_URL + itemCart.img}
+                        height={130}
+                        width={130}
+                      ></img>
+                    </Box>
+                  ) : null;
+                })}
 
-              <Box>
-                <Typography>Title</Typography>
-                <Typography variant="subtitle2" component="div">
-                  {products.map((itemA) => {
-                    return itemA.id == item.id ? itemA.title : null;
-                  })}
-                </Typography>
-              </Box>
-              <Box>
-                <Typography>Price</Typography>
-                <Typography
-                  variant="subtitle2"
-                  component="div"
-                  sx={{ margin: "auto" }}
-                >
-                  {products.map((itemCart) => {
-                    return itemCart.id == item.id ? itemCart.price : null;
-                  })}
-                </Typography>
-              </Box>
-              <Box>
-                <Typography>Quantity</Typography>
-                <Typography variant="subtitle2" component="div">
-                  {item.quantity}
-                </Typography>
-              </Box>
-              <div>
-                <Button
-                  variant="contained"
-                  size="small"
-                  sx={{ mx: 1 }}
-                  onClick={() => handleDecrease(item.id)}
-                >
-                  -
-                </Button>
-                <Button
-                  variant="contained"
-                  size="small"
-                  sx={{ mx: 1 }}
-                  onClick={() => handleIncrement(item.id)}
-                >
-                  +
-                </Button>
+                <Box>
+                  <Typography>Title</Typography>
+                  <Typography variant="subtitle2" component="div">
+                    {products.map((itemA) => {
+                      return itemA.id == item.id ? itemA.title : null;
+                    })}
+                  </Typography>
+                </Box>
+                <Box>
+                  <Typography>Price</Typography>
+                  <Typography
+                    variant="subtitle2"
+                    component="div"
+                    sx={{ margin: "auto" }}
+                  >
+                    {products.map((itemCart) => {
+                      return itemCart.id == item.id ? itemCart.price : null;
+                    })}
+                  </Typography>
+                </Box>
+                <Box>
+                  <Typography>Quantity</Typography>
+                  <Typography variant="subtitle2" component="div">
+                    {item.quantity}
+                  </Typography>
+                </Box>
+                <div>
+                  <Button
+                    variant="contained"
+                    size="small"
+                    sx={{ mx: 1 }}
+                    onClick={() => handleDecrease(item.id)}
+                  >
+                    -
+                  </Button>
+                  <Button
+                    variant="contained"
+                    size="small"
+                    sx={{ mx: 1 }}
+                    onClick={() => handleIncrement(item.id)}
+                  >
+                    +
+                  </Button>
 
-                <Button
-                  variant="contained"
-                  sx={{ mx: 1 }}
-                  size="small"
-                  onClick={() => removeFromCart(item.id)}
-                >
-                  remove
-                </Button>
-              </div>
-            </Box>
+                  <Button
+                    variant="contained"
+                    sx={{ mx: 1 }}
+                    size="small"
+                    onClick={() => removeFromCart(item.id)}
+                  >
+                    remove
+                  </Button>
+                </div>
+              </Box>
+              <Divider sx={{ backgroundColor: "#e3dede" }} />
+            </>
           ))}
           <Box sx={{ display: "flex", justifyContent: "end", mt: 2 }}>
             <Typography variant="h5" sx={{ mx: 1 }}>

@@ -26,6 +26,7 @@ export default function nav() {
   const quantityCartA = useSelector(
     (state) => state.quantity.shoppingCart.quantity
   );
+  const shoppingCarts = useSelector((state) => state.quantity.shoppingCarts);
   const [quantityCart, setQuantityCart] = useState(0);
   const [state, setState] = useState({
     top: false,
@@ -91,32 +92,38 @@ export default function nav() {
             </Icon>
           </Box>
           <Divider />
-          <Box
-            py={4}
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
+          {shoppingCarts.map(() => (
             <Box
+              py={2}
               sx={{
                 display: "flex",
-                justifyContent: "start",
+                justifyContent: "space-between",
                 alignItems: "center",
               }}
             >
-              <img
-                src={process.env.PUBLIC_URL + "/imgs/product-1.png"}
-                height={75}
-                width={75}
-              ></img>
-              <Typography paddingX={1}>Title</Typography>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "start",
+                  alignItems: "center",
+                }}
+              >
+                <img
+                  src={process.env.PUBLIC_URL + "/imgs/product-1.png"}
+                  height={75}
+                  width={75}
+                ></img>
+                <Box paddingX={1}>
+                  <Typography>Title</Typography>
+                  <Typography> 2 X 200</Typography>
+                </Box>
+              </Box>
+              <Icon onClick={() => console.log("remove ...")}>
+                <CancelOutlinedIcon />
+              </Icon>
             </Box>
-            <Icon>
-              <CancelOutlinedIcon />
-            </Icon>
-          </Box>
+          ))}
+
           <Divider />
           <Box py={2} sx={{ display: "flex", justifyContent: "space-between" }}>
             <Typography>Subtotal</Typography>
