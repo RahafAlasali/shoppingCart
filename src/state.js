@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   shoppingCart: { quantity: 0 },
   shoppingCarts: [],
+  products: [],
   total: 0,
 };
 
@@ -41,6 +42,9 @@ export const quantitySlice = createSlice({
         { id: +action.payload, quantity: 1 },
       ];
     },
+    setProductsArray: (state, action) => {
+      state.products = action.payload;
+    },
   },
 });
 
@@ -52,6 +56,7 @@ export const {
   reduceQuantityCartShopping,
   addItemToCart,
   removeItemToCart,
+  setProductsArray,
 } = quantitySlice.actions;
 
 export default quantitySlice.reducer;

@@ -13,6 +13,7 @@ import {
   reduceQuantityCartShopping,
   addItemToCart,
   removeItemToCart,
+  setProductsArray,
 } from "../state";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -38,6 +39,8 @@ export default function home() {
       })
       .then((data) => {
         setProducts(data);
+        dispatch(setProductsArray(data));
+        // add product to Store
         var productsLocal = JSON.parse(localStorage.getItem("products"));
         if (productsLocal == null) setShoppingCarts([]);
         else setShoppingCarts(productsLocal);

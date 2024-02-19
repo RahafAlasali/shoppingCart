@@ -4,8 +4,6 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { useSelector, useDispatch } from "react-redux";
 import { store } from "../store";
-import axios from "axios";
-// import imgBook from "../imgs/book.jpg";
 import Divider from "@mui/material/Divider";
 
 import {
@@ -17,12 +15,14 @@ import {
 import { useEffect, useState } from "react";
 
 export default function shoppingCart() {
-  const [products, setProducts] = useState([]);
   const [shoppingCarts, setShoppingCarts] = useState(
     useSelector((state) => {
       return state.quantity.shoppingCarts;
     })
   );
+  const pro = useSelector((state) => {
+    return state.quantity.products;
+  });
   var t;
   const [total, setTotal] = useState(0); //(state) => state.quantity.total
   const dispatch = useDispatch();
@@ -59,23 +59,15 @@ export default function shoppingCart() {
   }
   const subscribe = store.subscribe(() => console.log("The state is update"));
   useEffect(() => {
-    axios
-      .get("https://rahafalasali.github.io/shoppingCart/db.json")
-      .then((res) => {
-        return res.data.products;
-      })
-      .then((data) => {
-        setProducts(data);
-        var arrayExisti = localStorage.getItem("products");
-        if (arrayExisti == null) setShoppingCarts(shoppingCarts);
-        else setShoppingCarts(JSON.parse(arrayExisti));
-      });
+    var arrayExisti = localStorage.getItem("products");
+    if (arrayExisti == null) setShoppingCarts(shoppingCarts);
+    else setShoppingCarts(JSON.parse(arrayExisti));
   }, []);
   useEffect(() => {
     var total = shoppingCarts
       .map((item) => {
         return (
-          products.find((M) => {
+          pro.find((M) => {
             return M.id == item.id;
           })?.price * item.quantity
         );
@@ -104,7 +96,7 @@ export default function shoppingCart() {
                   marginY: "15px",
                 }}
               >
-                {products.map((itemCart) => {
+                {pro.map((itemCart) => {
                   return itemCart.id == item.id ? (
                     <Box>
                       <img
@@ -115,29 +107,28 @@ export default function shoppingCart() {
                     </Box>
                   ) : null;
                 })}
-
                 <Box>
-                  <Typography>Title</Typography>
+                  <Typography fontSize={20}>Title</Typography>
                   <Typography variant="subtitle2" component="div">
-                    {products.map((itemA) => {
+                    {pro.map((itemA) => {
                       return itemA.id == item.id ? itemA.title : null;
                     })}
                   </Typography>
                 </Box>
                 <Box>
-                  <Typography>Price</Typography>
+                  <Typography fontSize={20}>Price</Typography>
                   <Typography
                     variant="subtitle2"
                     component="div"
                     sx={{ margin: "auto" }}
                   >
-                    {products.map((itemCart) => {
+                    {pro.map((itemCart) => {
                       return itemCart.id == item.id ? itemCart.price : null;
                     })}
                   </Typography>
                 </Box>
                 <Box>
-                  <Typography>Quantity</Typography>
+                  <Typography fontSize={20}>Quantity</Typography>
                   <Typography variant="subtitle2" component="div">
                     {item.quantity}
                   </Typography>
