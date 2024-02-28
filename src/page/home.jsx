@@ -14,6 +14,7 @@ import {
   addItemToCart,
   removeItemToCart,
   setProductsArray,
+  setShoppingCartsArray,
 } from "../state";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -23,14 +24,16 @@ import axios from "axios";
 
 export default function home() {
   const [products, setProducts] = useState([]);
-  //   const quantity = useSelector((state) => state.quantity.value);
+  const quantityCart = useSelector(
+    (state) => state.quantity.shoppingCart.quantity
+  );
   const [shoppingCarts, setShoppingCarts] = useState(
     useSelector((state) => {
       return state.quantity.shoppingCarts;
     })
   );
   const dispatch = useDispatch();
-  //   const [addToCart, setAddToCart] = useState(false);
+
   useEffect(() => {
     axios
       .get("https://rahafalasali.github.io/shoppingCart/db.json")
@@ -40,53 +43,53 @@ export default function home() {
       .then((data) => {
         setProducts(data);
         dispatch(setProductsArray(data));
-        // add product to Store
-        var productsLocal = JSON.parse(localStorage.getItem("products"));
+        var productsLocal = JSON.parse(localStorage.getItem("shoppingCarts"));
         if (productsLocal == null) setShoppingCarts([]);
-        else setShoppingCarts(productsLocal);
+        else {
+          setShoppingCarts(productsLocal);
+          setShoppingCartsArray(productsLocal);
+        }
       })
       .catch((error) => {})
       .finally(() => {});
   }, []);
+
   function handleAddToCart(id) {
     dispatch(addQuantityCartShopping());
-    dispatch(addItemToCart(id));
     var product = { id, quantity: 1 };
-    var arrayExisti;
-    arrayExisti = JSON.parse(localStorage.getItem("products"));
-    if (arrayExisti == null) arrayExisti = [];
-    arrayExisti.push(product);
-    setShoppingCarts((prv) => [...prv, product]);
-    localStorage.setItem("products", JSON.stringify(arrayExisti));
-    var quantityCart = JSON.parse(localStorage.getItem("quantityCart"));
+    dispatch(addItemToCart(id));
+    shoppingCarts.push(product);
+    setShoppingCarts(shoppingCarts);
+    localStorage.setItem("shoppingCarts", JSON.stringify(shoppingCarts));
     localStorage.setItem("quantityCart", JSON.stringify(quantityCart + 1));
   }
+
   function removeFromCart(id) {
+    // console.log(quantityCart, "quantityCart");
     dispatch(reduceQuantityCartShopping());
     dispatch(removeItemToCart(id));
-    var productsLocal = JSON.parse(localStorage.getItem("products"));
-    var t = productsLocal.filter((item) => item.id != id);
-    localStorage.setItem("products", JSON.stringify(t));
+    var t = shoppingCarts.filter((item) => item.id != id);
+    localStorage.setItem("shoppingCarts", JSON.stringify(t));
     setShoppingCarts(t);
-    var quantityCart = JSON.parse(localStorage.getItem("quantityCart"));
     localStorage.setItem("quantityCart", JSON.stringify(quantityCart - 1));
   }
+
   function handleIncrement(id) {
     dispatch(increment(id));
-    var productsLocal = JSON.parse(localStorage.getItem("products"));
+    var productsLocal = JSON.parse(localStorage.getItem("shoppingCarts"));
     var t = productsLocal.map((item) =>
       item.id == id ? { ...item, quantity: item.quantity + 1 } : item
     );
-    localStorage.setItem("products", JSON.stringify(t));
+    localStorage.setItem("shoppingCarts", JSON.stringify(t));
     setShoppingCarts(t);
   }
   function handleDecrease(id) {
     dispatch(decrease(id));
-    var productsLocal = JSON.parse(localStorage.getItem("products"));
+    var productsLocal = JSON.parse(localStorage.getItem("shoppingCarts"));
     var t = productsLocal.map((item) =>
       item.id == id ? { ...item, quantity: item.quantity - 1 } : item
     );
-    localStorage.setItem("products", JSON.stringify(t));
+    localStorage.setItem("shoppingCarts", JSON.stringify(t));
     setShoppingCarts(t);
   }
   return (

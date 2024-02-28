@@ -45,6 +45,9 @@ export const quantitySlice = createSlice({
     setProductsArray: (state, action) => {
       state.products = action.payload;
     },
+    setShoppingCartsArray: (state, action) => {
+      state.shoppingCarts = action.payload;
+    },
   },
 });
 
@@ -57,6 +60,7 @@ export const {
   addItemToCart,
   removeItemToCart,
   setProductsArray,
+  setShoppingCartsArray,
 } = quantitySlice.actions;
 
 export default quantitySlice.reducer;

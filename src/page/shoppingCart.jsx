@@ -5,12 +5,15 @@ import Box from "@mui/material/Box";
 import { useSelector, useDispatch } from "react-redux";
 import { store } from "../store";
 import Divider from "@mui/material/Divider";
+import axios from "axios";
 
 import {
   increment,
   decrease,
   reduceQuantityCartShopping,
   removeItemToCart,
+  setProductsArray,
+  setShoppingCartsArray,
 } from "../state";
 import { useEffect, useState } from "react";
 
@@ -20,29 +23,31 @@ export default function shoppingCart() {
       return state.quantity.shoppingCarts;
     })
   );
-  const pro = useSelector((state) => {
-    return state.quantity.products;
-  });
+  const [products, setProducts] = useState(
+    useSelector((state) => {
+      return state.quantity.products;
+    })
+  );
   var t;
   const [total, setTotal] = useState(0); //(state) => state.quantity.total
   const dispatch = useDispatch();
   function removeFromCart(id) {
     dispatch(reduceQuantityCartShopping());
     dispatch(removeItemToCart(id));
-    var productsLocal = JSON.parse(localStorage.getItem("products"));
+    var productsLocal = JSON.parse(localStorage.getItem("shoppingCarts"));
     var t = productsLocal.filter((item) => item.id != id);
-    localStorage.setItem("products", JSON.stringify(t));
+    localStorage.setItem("shoppingCarts", JSON.stringify(t));
     setShoppingCarts(t);
     var quantityCart = JSON.parse(localStorage.getItem("quantityCart"));
     localStorage.setItem("quantityCart", JSON.stringify(quantityCart - 1));
   }
   function handleIncrement(id) {
     dispatch(increment(id));
-    var productsLocal = JSON.parse(localStorage.getItem("products"));
+    var productsLocal = JSON.parse(localStorage.getItem("shoppingCarts"));
     var t = productsLocal.map((item) =>
       item.id == id ? { ...item, quantity: item.quantity + 1 } : item
     );
-    localStorage.setItem("products", JSON.stringify(t));
+    localStorage.setItem("shoppingCarts", JSON.stringify(t));
     setShoppingCarts(t);
   }
   function handleDecrease(id) {
@@ -50,24 +55,34 @@ export default function shoppingCart() {
     //// update
     // update store then localStorge with same value from store
     //  localStorage.setItem("products", JSON.stringify()) From store
-    var productsLocal = JSON.parse(localStorage.getItem("products"));
+    var productsLocal = JSON.parse(localStorage.getItem("shoppingCarts"));
     var t = productsLocal.map((item) =>
       item.id == id ? { ...item, quantity: item.quantity - 1 } : item
     );
-    localStorage.setItem("products", JSON.stringify(t)); //
+    localStorage.setItem("shoppingCarts", JSON.stringify(t)); //
     setShoppingCarts(t);
   }
   const subscribe = store.subscribe(() => console.log("The state is update"));
   useEffect(() => {
-    var arrayExisti = localStorage.getItem("products");
-    if (arrayExisti == null) setShoppingCarts(shoppingCarts);
-    else setShoppingCarts(JSON.parse(arrayExisti));
+    axios
+      .get("https://rahafalasali.github.io/shoppingCart/db.json")
+      .then((res) => {
+        return res.data.products;
+      })
+      .then((data) => {
+        setProducts(data);
+        dispatch(setProductsArray(data));
+      });
+    var arrayExisti = localStorage.getItem("shoppingCarts");
+    if (arrayExisti != null) setShoppingCarts(JSON.parse(arrayExisti));
+    dispatch(setShoppingCartsArray(JSON.parse(arrayExisti)));
+    // add to store
   }, []);
   useEffect(() => {
     var total = shoppingCarts
       .map((item) => {
         return (
-          pro.find((M) => {
+          products.find((M) => {
             return M.id == item.id;
           })?.price * item.quantity
         );
@@ -96,7 +111,7 @@ export default function shoppingCart() {
                   marginY: "15px",
                 }}
               >
-                {pro.map((itemCart) => {
+                {products.map((itemCart) => {
                   return itemCart.id == item.id ? (
                     <Box>
                       <img
@@ -107,10 +122,10 @@ export default function shoppingCart() {
                     </Box>
                   ) : null;
                 })}
-                <Box>
+                <Box minWidth={100} textAlign={"center"}>
                   <Typography fontSize={20}>Title</Typography>
                   <Typography variant="subtitle2" component="div">
-                    {pro.map((itemA) => {
+                    {products.map((itemA) => {
                       return itemA.id == item.id ? itemA.title : null;
                     })}
                   </Typography>
@@ -121,15 +136,20 @@ export default function shoppingCart() {
                     variant="subtitle2"
                     component="div"
                     sx={{ margin: "auto" }}
+                    textAlign={"center"}
                   >
-                    {pro.map((itemCart) => {
+                    {products.map((itemCart) => {
                       return itemCart.id == item.id ? itemCart.price : null;
                     })}
                   </Typography>
                 </Box>
                 <Box>
                   <Typography fontSize={20}>Quantity</Typography>
-                  <Typography variant="subtitle2" component="div">
+                  <Typography
+                    variant="subtitle2"
+                    textAlign={"center"}
+                    component="div"
+                  >
                     {item.quantity}
                   </Typography>
                 </Box>

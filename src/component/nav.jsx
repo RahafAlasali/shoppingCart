@@ -21,22 +21,25 @@ import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 import CloseIcon from "@mui/icons-material/Close";
 import Icon from "@mui/material/Icon";
 import PersonIcon from "@mui/icons-material/Person";
+import Shoppingcart from "./shoppingcart.jsx";
 
 export default function nav() {
   const quantityCartA = useSelector(
     (state) => state.quantity.shoppingCart.quantity
   );
-  const shoppingCarts = useSelector((state) => state.quantity.shoppingCarts);
   const [quantityCart, setQuantityCart] = useState(0);
+
+  useEffect(() => {
+    setQuantityCart(JSON.parse(localStorage.getItem("quantityCart")));
+  }, [quantityCartA]);
+
   const [state, setState] = useState({
     top: false,
     left: false,
     bottom: false,
     right: false,
   });
-  useEffect(() => {
-    setQuantityCart(JSON.parse(localStorage.getItem("quantityCart")));
-  }, [quantityCartA]);
+
   const toggleDrawer = (anchor, open) => (event) => {
     if (
       event &&
@@ -74,90 +77,7 @@ export default function nav() {
       </List>
     </Box>
   );
-  const cartDrawer = () => (
-    <>
-      <Box minWidth={250} p={4}>
-        <Box>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
-            <Typography gutterBottom variant="h6">
-              <Box pb={2}>Shopping Cart</Box>
-            </Typography>
-            <Icon onClick={toggleDrawer("right", false)}>
-              <CloseIcon />
-            </Icon>
-          </Box>
-          <Divider />
-          {shoppingCarts.map(() => (
-            <Box
-              py={2}
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "start",
-                  alignItems: "center",
-                }}
-              >
-                <img
-                  src={process.env.PUBLIC_URL + "/imgs/product-1.png"}
-                  height={75}
-                  width={75}
-                ></img>
-                <Box paddingX={1}>
-                  <Typography>Title</Typography>
-                  <Typography> 2 X 200</Typography>
-                </Box>
-              </Box>
-              <Icon onClick={() => console.log("remove ...")}>
-                <CancelOutlinedIcon />
-              </Icon>
-            </Box>
-          ))}
-
-          <Divider />
-          <Box py={2} sx={{ display: "flex", justifyContent: "space-between" }}>
-            <Typography>Subtotal</Typography>
-            <Typography> 1000</Typography>
-          </Box>
-          <Divider />
-        </Box>
-        <Box>
-          <Box>
-            <Button
-              variant="contained"
-              size="large"
-              sx={{ padding: 1, paddingX: 1, marginTop: 2, minWidth: 250 }}
-              component={Link}
-              to="/shoppingCart/cart"
-              onClick={toggleDrawer("right", false)}
-            >
-              View Cart
-            </Button>
-          </Box>
-          <Box>
-            <Button
-              variant="contained"
-              size="large"
-              sx={{ padding: 1, paddingX: 1, marginTop: 2, minWidth: 250 }}
-              component={Link}
-            >
-              checkout
-            </Button>
-          </Box>
-        </Box>
-      </Box>
-    </>
-  );
+  const cartDrawer = () => <Shoppingcart toggleDrawer={toggleDrawer} />;
   return (
     <>
       <AppBar position="static">
