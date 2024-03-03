@@ -5,7 +5,6 @@ import Box from "@mui/material/Box";
 import { useSelector, useDispatch } from "react-redux";
 import { store } from "../store";
 import Divider from "@mui/material/Divider";
-import axios from "axios";
 
 import {
   increment,
@@ -34,8 +33,7 @@ export default function shoppingCart() {
   function removeFromCart(id) {
     dispatch(reduceQuantityCartShopping());
     dispatch(removeItemToCart(id));
-    var productsLocal = JSON.parse(localStorage.getItem("shoppingCarts"));
-    var t = productsLocal.filter((item) => item.id != id);
+    var t = shoppingCarts.filter((item) => item.id != id);
     localStorage.setItem("shoppingCarts", JSON.stringify(t));
     setShoppingCarts(t);
     var quantityCart = JSON.parse(localStorage.getItem("quantityCart"));
@@ -43,8 +41,7 @@ export default function shoppingCart() {
   }
   function handleIncrement(id) {
     dispatch(increment(id));
-    var productsLocal = JSON.parse(localStorage.getItem("shoppingCarts"));
-    var t = productsLocal.map((item) =>
+    var t = shoppingCarts.map((item) =>
       item.id == id ? { ...item, quantity: item.quantity + 1 } : item
     );
     localStorage.setItem("shoppingCarts", JSON.stringify(t));
@@ -52,22 +49,17 @@ export default function shoppingCart() {
   }
   function handleDecrease(id) {
     dispatch(decrease(id));
-    //// update
-    // update store then localStorge with same value from store
-    //  localStorage.setItem("products", JSON.stringify()) From store
-    var productsLocal = JSON.parse(localStorage.getItem("shoppingCarts"));
-    var t = productsLocal.map((item) =>
+    var t = shoppingCarts.map((item) =>
       item.id == id ? { ...item, quantity: item.quantity - 1 } : item
     );
-    localStorage.setItem("shoppingCarts", JSON.stringify(t)); //
+    localStorage.setItem("shoppingCarts", JSON.stringify(t));
     setShoppingCarts(t);
   }
   const subscribe = store.subscribe(() => console.log("The state is update"));
   useEffect(() => {
-    axios
-      .get("https://rahafalasali.github.io/shoppingCart/db.json")
-      .then((res) => {
-        return res.data.products;
+    fetch("https://fakestoreapi.com/products")
+      .then((response) => {
+        return response.json();
       })
       .then((data) => {
         setProducts(data);
@@ -114,11 +106,7 @@ export default function shoppingCart() {
                 {products.map((itemCart) => {
                   return itemCart.id == item.id ? (
                     <Box>
-                      <img
-                        src={process.env.PUBLIC_URL + itemCart.img}
-                        height={130}
-                        width={130}
-                      ></img>
+                      <img src={itemCart.image} height={130} width={130}></img>
                     </Box>
                   ) : null;
                 })}

@@ -4,7 +4,6 @@ const initialState = {
   shoppingCart: { quantity: 0 },
   shoppingCarts: [],
   products: [],
-  total: 0,
 };
 
 export const quantitySlice = createSlice({
@@ -32,11 +31,13 @@ export const quantitySlice = createSlice({
       state.shoppingCart.quantity -= 1;
     },
     removeItemToCart: (state, action) => {
+      state.shoppingCart.quantity -= 1;
       state.shoppingCarts = state.shoppingCarts.filter(
         (item) => +item.id != +action.payload
       );
     },
     addItemToCart: (state, action) => {
+      state.shoppingCart.quantity += 1;
       state.shoppingCarts = [
         ...state.shoppingCarts,
         { id: +action.payload, quantity: 1 },
@@ -47,6 +48,9 @@ export const quantitySlice = createSlice({
     },
     setShoppingCartsArray: (state, action) => {
       state.shoppingCarts = action.payload;
+    },
+    setQuantityCart: (state, action) => {
+      state.shoppingCart.quantity = action.payload;
     },
   },
 });
@@ -61,6 +65,7 @@ export const {
   removeItemToCart,
   setProductsArray,
   setShoppingCartsArray,
+  setQuantityCart,
 } = quantitySlice.actions;
 
 export default quantitySlice.reducer;

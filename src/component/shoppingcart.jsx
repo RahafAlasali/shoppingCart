@@ -9,30 +9,32 @@ import Typography from "@mui/material/Typography";
 import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
 import axios from "axios";
-import { reduceQuantityCartShopping, removeItemToCart } from "../state";
+import { removeItemToCart } from "../state";
 
 export default function shoppingcart({ toggleDrawer }) {
-  const shoppingCarts = JSON.parse(localStorage.getItem("shoppingCarts"));
+  const [shoppingCarts, setShoppingCarts] = useState(
+    useSelector((state) => {
+      return state.quantity.shoppingCarts;
+    })
+  );
+  const quantityCart = useSelector(
+    (state) => state.quantity.shoppingCart.quantity
+  );
   const [products, setProducts] = useState([]);
   var shoppingCartIds = shoppingCarts.map((item) => item.id);
   const dispatch = useDispatch();
 
   function removeFromCart(id) {
-    dispatch(reduceQuantityCartShopping());
     dispatch(removeItemToCart(id));
-    var productsLocal = JSON.parse(localStorage.getItem("shoppingCarts"));
-    var t = productsLocal.filter((item) => item.id != id);
+    var t = shoppingCarts.filter((item) => item.id != id);
     localStorage.setItem("shoppingCarts", JSON.stringify(t));
-    // setShoppingCarts(t);
-    var quantityCart = JSON.parse(localStorage.getItem("quantityCart"));
     localStorage.setItem("quantityCart", JSON.stringify(quantityCart - 1));
   }
 
   useEffect(() => {
-    axios
-      .get("https://rahafalasali.github.io/shoppingCart/db.json")
+    fetch("https://fakestoreapi.com/products")
       .then((response) => {
-        return response.data.products;
+        return response.json();
       })
       .then((data) => {
         setProducts(data);
@@ -77,11 +79,7 @@ export default function shoppingcart({ toggleDrawer }) {
                       alignItems: "center",
                     }}
                   >
-                    <img
-                      src={process.env.PUBLIC_URL + "/imgs/product-1.png"}
-                      height={75}
-                      width={75}
-                    ></img>
+                    <img src={item.image} height={75} width={75}></img>
                     <Box paddingX={1}>
                       <Typography>{item.title}</Typography>
                       <Typography> 2 X 200</Typography>
