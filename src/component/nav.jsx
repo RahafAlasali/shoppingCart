@@ -25,7 +25,7 @@ import Shoppingcart from "./shoppingcart.jsx";
 
 export default function nav() {
   const quantityCartA = useSelector(
-    (state) => state.quantity.shoppingCart.quantity
+    (state) => state.cart.shoppingCart.quantity
   );
   const [quantityCart, setQuantityCart] = useState(0);
 

@@ -8,25 +8,38 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
-import axios from "axios";
-import { removeItemToCart } from "../state";
+import { store } from "../store";
+import { setShoppingCartsArray, removeItemToCart, setTotal } from "../state";
 
 export default function shoppingcart({ toggleDrawer }) {
   const [shoppingCarts, setShoppingCarts] = useState(
     useSelector((state) => {
-      return state.quantity.shoppingCarts;
+      return state.cart.shoppingCarts;
     })
   );
-  const quantityCart = useSelector(
-    (state) => state.quantity.shoppingCart.quantity
+  const [total, setTotalDate] = useState(
+    useSelector((state) => {
+      return state.cart.total;
+    })
+  );
+  console.log(shoppingCarts, "shoppingCarts");
+  const [quantityCart, setQuantityCart] = useState(
+    useSelector((state) => state.cart.shoppingCart.quantity)
   );
   const [products, setProducts] = useState([]);
   var shoppingCartIds = shoppingCarts.map((item) => item.id);
   const dispatch = useDispatch();
 
+  const subscribe = store.subscribe(() => {
+    console.log("store quantity", store.getState().cart.shoppingCarts);
+  });
+
   function removeFromCart(id) {
     dispatch(removeItemToCart(id));
-    var t = shoppingCarts.filter((item) => item.id != id);
+    setQuantityCart(store.getState().cart.shoppingCart.quantity);
+    var t = store.getState().cart.shoppingCarts;
+    console.log(store.getState().cart.shoppingCarts);
+    setShoppingCarts(store.getState().cart.shoppingCarts);
     localStorage.setItem("shoppingCarts", JSON.stringify(t));
     localStorage.setItem("quantityCart", JSON.stringify(quantityCart - 1));
   }
@@ -38,11 +51,35 @@ export default function shoppingcart({ toggleDrawer }) {
       })
       .then((data) => {
         setProducts(data);
+        var productsLocal = JSON.parse(localStorage.getItem("shoppingCarts"));
+        var quantityCart = JSON.parse(localStorage.getItem("quantityCart"));
+        setQuantityCart(quantityCart);
+        // if (productsLocal == null) setShoppingCarts([]);
+        // else {
+        setShoppingCarts(productsLocal);
+        dispatch(setShoppingCartsArray(productsLocal));
+        // }
       })
       .catch((error) => {})
       .finally(() => {});
   }, []);
-  var itemD = null;
+  useEffect(() => {
+    var total = shoppingCarts
+      .map((item) => {
+        return (
+          parseInt(
+            products.find((M) => {
+              return M.id == item.id;
+            })?.price
+          ) * item.quantity
+        );
+      })
+      .reduce((accumulator, currentValue) => {
+        return accumulator + currentValue;
+      }, 0);
+    setTotalDate(total);
+    dispatch(setTotal(total));
+  }, [shoppingCarts]);
   return (
     <>
       <Box minWidth={250} p={4}>
@@ -61,43 +98,48 @@ export default function shoppingcart({ toggleDrawer }) {
             </Icon>
           </Box>
           <Divider />
-          {products.map((item) => {
-            if (shoppingCartIds.includes(item.id)) {
-              return (
+          {shoppingCarts.map((item) => {
+            return (
+              <Box
+                py={2}
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
                 <Box
-                  py={2}
                   sx={{
                     display: "flex",
-                    justifyContent: "space-between",
+                    justifyContent: "start",
                     alignItems: "center",
                   }}
                 >
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "start",
-                      alignItems: "center",
-                    }}
-                  >
-                    <img src={item.image} height={75} width={75}></img>
-                    <Box paddingX={1}>
-                      <Typography>{item.title}</Typography>
-                      <Typography> 2 X 200</Typography>
-                    </Box>
-                  </Box>
-                  <Icon onClick={() => removeFromCart(item.id)}>
-                    <CancelOutlinedIcon />
-                  </Icon>
+                  {products.map((itemP) => {
+                    return itemP.id == item.id ? (
+                      <>
+                        <img src={itemP.image} height={75} width={75}></img>
+                        <Box paddingX={2} maxWidth={200}>
+                          <Typography>{itemP.title}</Typography>
+                          <Typography marginY={1}>
+                            {parseInt(itemP.price)} X {item.quantity}
+                          </Typography>
+                        </Box>
+                      </>
+                    ) : null;
+                  })}
                 </Box>
-              );
-            }
-            return null;
+                <Icon onClick={() => removeFromCart(item.id)}>
+                  <CancelOutlinedIcon />
+                </Icon>
+              </Box>
+            );
           })}
 
           <Divider />
           <Box py={2} sx={{ display: "flex", justifyContent: "space-between" }}>
             <Typography>Subtotal</Typography>
-            <Typography> 1000</Typography>
+            <Typography> {total}</Typography>
           </Box>
           <Divider />
         </Box>

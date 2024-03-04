@@ -26,13 +26,13 @@ export default function home() {
   const [products, setProducts] = useState([]);
   const [quantityCart, setQuantityCartData] = useState(
     useSelector((state) => {
-      return state.quantity.shoppingCart.quantity;
+      return state.cart.shoppingCart.quantity;
     })
   );
   console.log(quantityCart, "quantityCart");
   const [shoppingCarts, setShoppingCarts] = useState(
     useSelector((state) => {
-      return state.quantity.shoppingCarts;
+      return state.cart.shoppingCarts;
     })
   );
   const dispatch = useDispatch();
@@ -52,36 +52,38 @@ export default function home() {
         if (productsLocal == null) setShoppingCarts([]);
         else {
           setShoppingCarts(productsLocal);
-          setShoppingCartsArray(productsLocal);
+          dispatch(setShoppingCartsArray(productsLocal));
         }
       })
       .catch((error) => {})
       .finally(() => {});
   }, []);
 
-  const subscribe = store.subscribe(() => {
-    console.log(
-      "store quantity",
-      store.getState().quantity.shoppingCart.quantity
-    );
-  });
+  // const subscribe = store.subscribe(() => {
+  //   console.log(
+  //     "store quantity",
+  //     store.getState().cart.shoppingCart.quantity
+  //   );
+  // });
 
   function handleAddToCart(id) {
-    var product = { id, quantity: 1 };
     dispatch(addItemToCart(id));
-    shoppingCarts.push(product);
-    setShoppingCarts(shoppingCarts);
-    setQuantityCartData(store.getState().quantity.shoppingCart.quantity);
-    localStorage.setItem("shoppingCarts", JSON.stringify(shoppingCarts));
+    setShoppingCarts(store.getState().cart.shoppingCarts);
+    setQuantityCartData(store.getState().cart.shoppingCart.quantity);
+    localStorage.setItem(
+      "shoppingCarts",
+      JSON.stringify(store.getState().cart.shoppingCarts)
+    );
     localStorage.setItem("quantityCart", JSON.stringify(quantityCart + 1));
   }
 
   function removeFromCart(id) {
     dispatch(removeItemToCart(id));
-    var t = shoppingCarts.filter((item) => item.id != id);
+    var t = store.getState().cart.shoppingCarts;
+    console.log(store.getState().cart.shoppingCarts);
     localStorage.setItem("shoppingCarts", JSON.stringify(t));
     setShoppingCarts(t);
-    setQuantityCartData(store.getState().quantity.shoppingCart.quantity);
+    setQuantityCartData(store.getState().cart.shoppingCart.quantity);
     localStorage.setItem("quantityCart", JSON.stringify(quantityCart - 1));
   }
 
@@ -106,25 +108,28 @@ export default function home() {
       <Container maxWidth="lg">
         <Box sx={{ display: "flex", justifyContent: "center" }}>
           <Grid spacing={2}>
-            <Grid item xs={12} sm={6} md={3} lg={2}>
+            <Grid item xs={3} sm={3} md={3} lg={2}>
               {products.map((item) => (
                 <Card
                   key={item.id}
                   sx={{
                     maxWidth: 350,
                     minWidth: 350,
-                    minHeight: 300,
                     m: 1,
                     display: "inline-block",
                   }}
                 >
                   <CardMedia
-                    sx={{ height: 140 }}
+                    sx={{
+                      height: 140,
+                      minHeight: 200,
+                      backgroundSize: "contain",
+                    }}
                     image={item.image}
                     title="green iguana"
                   />
-                  <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
+                  <CardContent sx={{ minHeight: 150 }}>
+                    <Typography gutterBottom variant="h6" component="div">
                       {item.title}
                     </Typography>
                     <Typography
@@ -132,14 +137,22 @@ export default function home() {
                       variant="subtitle2"
                       component="div"
                     >
-                      {item.price}
+                      {parseInt(item.price)}
                     </Typography>
                   </CardContent>
                   <CardActions
-                    sx={{ display: "flex", justifyContent: "center" }}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                    }}
                   >
                     {shoppingCarts.map((item) => item.id).includes(item.id) ? (
-                      <Box sx={{ display: "flex", justifyContent: "center" }}>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          justifyContent: "center",
+                        }}
+                      >
                         <Button
                           variant="contained"
                           size="small"

@@ -13,22 +13,27 @@ import {
   removeItemToCart,
   setProductsArray,
   setShoppingCartsArray,
+  setTotal,
 } from "../state";
 import { useEffect, useState } from "react";
 
 export default function shoppingCart() {
   const [shoppingCarts, setShoppingCarts] = useState(
     useSelector((state) => {
-      return state.quantity.shoppingCarts;
+      return state.cart.shoppingCarts;
     })
   );
   const [products, setProducts] = useState(
     useSelector((state) => {
-      return state.quantity.products;
+      return state.cart.products;
     })
   );
   var t;
-  const [total, setTotal] = useState(0); //(state) => state.quantity.total
+  const [total, setTotalDate] = useState(
+    useSelector((state) => {
+      return state.cart.total;
+    })
+  );
   const dispatch = useDispatch();
   function removeFromCart(id) {
     dispatch(reduceQuantityCartShopping());
@@ -57,32 +62,37 @@ export default function shoppingCart() {
   }
   const subscribe = store.subscribe(() => console.log("The state is update"));
   useEffect(() => {
-    fetch("https://fakestoreapi.com/products")
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        setProducts(data);
-        dispatch(setProductsArray(data));
-      });
-    var arrayExisti = localStorage.getItem("shoppingCarts");
-    if (arrayExisti != null) setShoppingCarts(JSON.parse(arrayExisti));
-    dispatch(setShoppingCartsArray(JSON.parse(arrayExisti)));
-    // add to store
+    (async () => {
+      await fetch("https://fakestoreapi.com/products")
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          setProducts(data);
+          dispatch(setProductsArray(data));
+        });
+      var arrayExisti = localStorage.getItem("shoppingCarts");
+      if (arrayExisti != null) setShoppingCarts(JSON.parse(arrayExisti));
+      dispatch(setShoppingCartsArray(JSON.parse(arrayExisti)));
+    })();
   }, []);
   useEffect(() => {
+    console.log(products, "products");
     var total = shoppingCarts
       .map((item) => {
         return (
-          products.find((M) => {
-            return M.id == item.id;
-          })?.price * item.quantity
+          parseInt(
+            products.find((M) => {
+              return M.id == item.id;
+            })?.price
+          ) * item.quantity
         );
       })
       .reduce((accumulator, currentValue) => {
         return accumulator + currentValue;
       }, 0);
-    setTotal(total);
+    setTotalDate(total);
+    dispatch(setTotal(total));
   }, [shoppingCarts]);
   return (
     <>
@@ -110,7 +120,7 @@ export default function shoppingCart() {
                     </Box>
                   ) : null;
                 })}
-                <Box minWidth={100} textAlign={"center"}>
+                <Box minWidth={100} maxWidth={150} textAlign={"center"}>
                   <Typography fontSize={20}>Title</Typography>
                   <Typography variant="subtitle2" component="div">
                     {products.map((itemA) => {
@@ -127,7 +137,9 @@ export default function shoppingCart() {
                     textAlign={"center"}
                   >
                     {products.map((itemCart) => {
-                      return itemCart.id == item.id ? itemCart.price : null;
+                      return itemCart.id == item.id
+                        ? parseInt(itemCart.price)
+                        : null;
                     })}
                   </Typography>
                 </Box>

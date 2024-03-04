@@ -4,10 +4,11 @@ const initialState = {
   shoppingCart: { quantity: 0 },
   shoppingCarts: [],
   products: [],
+  total: 0,
 };
 
-export const quantitySlice = createSlice({
-  name: "quantity",
+export const cartSlice = createSlice({
+  name: "cart",
   initialState,
   reducers: {
     increment: (state, action) => {
@@ -35,6 +36,7 @@ export const quantitySlice = createSlice({
       state.shoppingCarts = state.shoppingCarts.filter(
         (item) => +item.id != +action.payload
       );
+      console.log("dsffsdfds", state.shoppingCarts);
     },
     addItemToCart: (state, action) => {
       state.shoppingCart.quantity += 1;
@@ -52,6 +54,9 @@ export const quantitySlice = createSlice({
     setQuantityCart: (state, action) => {
       state.shoppingCart.quantity = action.payload;
     },
+    setTotal: (state, action) => {
+      state.total = action.payload;
+    },
   },
 });
 
@@ -66,6 +71,7 @@ export const {
   setProductsArray,
   setShoppingCartsArray,
   setQuantityCart,
-} = quantitySlice.actions;
+  setTotal,
+} = cartSlice.actions;
 
-export default quantitySlice.reducer;
+export default cartSlice.reducer;
