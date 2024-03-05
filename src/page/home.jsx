@@ -43,29 +43,15 @@ export default function home() {
         dispatch(setProductsArray(data));
         var productsLocal = JSON.parse(localStorage.getItem("shoppingCarts"));
         var quantityCart = JSON.parse(localStorage.getItem("quantityCart"));
-        // setQuantityCartData(quantityCart);
         dispatch(setQuantityCart(quantityCart));
-        // if (productsLocal == null) setShoppingCarts([]);
-        // else {
-        // setShoppingCarts(productsLocal);
         dispatch(setShoppingCartsArray(productsLocal));
-        // }
       })
       .catch((error) => {})
       .finally(() => {});
   }, []);
 
-  // const subscribe = store.subscribe(() => {
-  //   console.log(
-  //     "store quantity",
-  //     store.getState().cart.shoppingCart.quantity
-  //   );
-  // });
-
   function handleAddToCart(id) {
     dispatch(addItemToCart(id));
-    // setShoppingCarts(store.getState().cart.shoppingCarts);
-    // setQuantityCartData(store.getState().cart.shoppingCart.quantity);
     localStorage.setItem(
       "shoppingCarts",
       JSON.stringify(store.getState().cart.shoppingCarts)
@@ -78,32 +64,22 @@ export default function home() {
     var t = store.getState().cart.shoppingCarts;
     console.log(store.getState().cart.shoppingCarts);
     localStorage.setItem("shoppingCarts", JSON.stringify(t));
-    // setShoppingCarts(t);
-    // setQuantityCartData(store.getState().cart.shoppingCart.quantity);
     localStorage.setItem("quantityCart", JSON.stringify(quantityCart - 1));
   }
 
   function handleIncrement(id) {
     dispatch(increment(id));
-    // var t = shoppingCarts.map((item) =>
-    //   item.id == id ? { ...item, quantity: item.quantity + 1 } : item
-    // );
     localStorage.setItem(
       "shoppingCarts",
       JSON.stringify(store.getState().cart.shoppingCarts)
     );
-    // setShoppingCarts(t);
   }
   function handleDecrease(id) {
     dispatch(decrease(id));
-    // var t = shoppingCarts.map((item) =>
-    //   item.id == id ? { ...item, quantity: item.quantity - 1 } : item
-    // );
     localStorage.setItem(
       "shoppingCarts",
       JSON.stringify(store.getState().cart.shoppingCarts)
     );
-    // setShoppingCarts(t);
   }
   return (
     <>

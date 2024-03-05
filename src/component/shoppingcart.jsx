@@ -34,10 +34,7 @@ export default function shoppingcart({ toggleDrawer }) {
 
   function removeFromCart(id) {
     dispatch(removeItemToCart(id));
-    // setQuantityCart(store.getState().cart.shoppingCart.quantity);
     var t = store.getState().cart.shoppingCarts;
-    console.log(store.getState().cart.shoppingCarts);
-    // setShoppingCarts(store.getState().cart.shoppingCarts);
     localStorage.setItem("shoppingCarts", JSON.stringify(t));
     localStorage.setItem("quantityCart", JSON.stringify(quantityCart - 1));
   }
@@ -52,11 +49,7 @@ export default function shoppingcart({ toggleDrawer }) {
         var productsLocal = JSON.parse(localStorage.getItem("shoppingCarts"));
         var quantityCart = JSON.parse(localStorage.getItem("quantityCart"));
         dispatch(setQuantityCart(quantityCart));
-        // if (productsLocal == null) setShoppingCarts([]);
-        // else {
-        // setShoppingCarts(productsLocal);
         dispatch(setShoppingCartsArray(productsLocal));
-        // }
       })
       .catch((error) => {})
       .finally(() => {});
@@ -75,7 +68,6 @@ export default function shoppingcart({ toggleDrawer }) {
       .reduce((accumulator, currentValue) => {
         return accumulator + currentValue;
       }, 0);
-    // setTotalDate(total);
     dispatch(setTotal(total));
   }, [shoppingCarts]);
   return (

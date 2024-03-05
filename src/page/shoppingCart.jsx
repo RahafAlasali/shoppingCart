@@ -9,7 +9,6 @@ import Divider from "@mui/material/Divider";
 import {
   increment,
   decrease,
-  reduceQuantityCartShopping,
   removeItemToCart,
   setProductsArray,
   setShoppingCartsArray,
@@ -27,40 +26,33 @@ export default function shoppingCart() {
   const total = useSelector((state) => {
     return state.cart.total;
   });
+  const quantityCart = useSelector((state) => state.cart.shoppingCart.quantity);
   const dispatch = useDispatch();
+
   function removeFromCart(id) {
-    dispatch(reduceQuantityCartShopping());
     dispatch(removeItemToCart(id));
-    // var t = shoppingCarts.filter((item) => item.id != id);
     localStorage.setItem(
       "shoppingCarts",
       JSON.stringify(store.getState().cart.shoppingCarts)
     );
-    // setShoppingCarts(t);
-    var quantityCart = JSON.parse(localStorage.getItem("quantityCart"));
-    localStorage.setItem("quantityCart", JSON.stringify(quantityCart - 1)); // from store
+    localStorage.setItem(
+      "quantityCart",
+      JSON.stringify(store.getState().cart.shoppingCart.quantity)
+    );
   }
   function handleIncrement(id) {
     dispatch(increment(id));
-    // var t = shoppingCarts.map((item) =>
-    //   item.id == id ? { ...item, quantity: item.quantity + 1 } : item
-    // );
     localStorage.setItem(
       "shoppingCarts",
       JSON.stringify(store.getState().cart.shoppingCarts)
     );
-    // setShoppingCarts(t);
   }
   function handleDecrease(id) {
     dispatch(decrease(id));
-    // var t = shoppingCarts.map((item) =>
-    //   item.id == id ? { ...item, quantity: item.quantity - 1 } : item
-    // );
     localStorage.setItem(
       "shoppingCarts",
       JSON.stringify(store.getState().cart.shoppingCarts)
     );
-    // setShoppingCarts(t);
   }
   const subscribe = store.subscribe(() => console.log("The state is update"));
   useEffect(() => {
@@ -70,11 +62,9 @@ export default function shoppingCart() {
           return response.json();
         })
         .then((data) => {
-          // setProducts(data);
           dispatch(setProductsArray(data));
         });
       var arrayExisti = localStorage.getItem("shoppingCarts");
-      // if (arrayExisti != null) setShoppingCarts(JSON.parse(arrayExisti));
       dispatch(setShoppingCartsArray(JSON.parse(arrayExisti)));
     })();
   }, []);
@@ -92,7 +82,6 @@ export default function shoppingCart() {
       .reduce((accumulator, currentValue) => {
         return accumulator + currentValue;
       }, 0);
-    // setTotalDate(total);
     dispatch(setTotal(total));
   }, [shoppingCarts]);
   return (
