@@ -24,17 +24,13 @@ import { store } from "../store";
 
 export default function home() {
   const [products, setProducts] = useState([]);
-  const [quantityCart, setQuantityCartData] = useState(
-    useSelector((state) => {
-      return state.cart.shoppingCart.quantity;
-    })
-  );
+  const quantityCart = useSelector((state) => {
+    return state.cart.shoppingCart.quantity;
+  });
   console.log(quantityCart, "quantityCart");
-  const [shoppingCarts, setShoppingCarts] = useState(
-    useSelector((state) => {
-      return state.cart.shoppingCarts;
-    })
-  );
+  const shoppingCarts = useSelector((state) => {
+    return state.cart.shoppingCarts;
+  });
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -47,13 +43,13 @@ export default function home() {
         dispatch(setProductsArray(data));
         var productsLocal = JSON.parse(localStorage.getItem("shoppingCarts"));
         var quantityCart = JSON.parse(localStorage.getItem("quantityCart"));
-        setQuantityCartData(quantityCart);
+        // setQuantityCartData(quantityCart);
         dispatch(setQuantityCart(quantityCart));
-        if (productsLocal == null) setShoppingCarts([]);
-        else {
-          setShoppingCarts(productsLocal);
-          dispatch(setShoppingCartsArray(productsLocal));
-        }
+        // if (productsLocal == null) setShoppingCarts([]);
+        // else {
+        // setShoppingCarts(productsLocal);
+        dispatch(setShoppingCartsArray(productsLocal));
+        // }
       })
       .catch((error) => {})
       .finally(() => {});
@@ -68,8 +64,8 @@ export default function home() {
 
   function handleAddToCart(id) {
     dispatch(addItemToCart(id));
-    setShoppingCarts(store.getState().cart.shoppingCarts);
-    setQuantityCartData(store.getState().cart.shoppingCart.quantity);
+    // setShoppingCarts(store.getState().cart.shoppingCarts);
+    // setQuantityCartData(store.getState().cart.shoppingCart.quantity);
     localStorage.setItem(
       "shoppingCarts",
       JSON.stringify(store.getState().cart.shoppingCarts)
@@ -82,26 +78,32 @@ export default function home() {
     var t = store.getState().cart.shoppingCarts;
     console.log(store.getState().cart.shoppingCarts);
     localStorage.setItem("shoppingCarts", JSON.stringify(t));
-    setShoppingCarts(t);
-    setQuantityCartData(store.getState().cart.shoppingCart.quantity);
+    // setShoppingCarts(t);
+    // setQuantityCartData(store.getState().cart.shoppingCart.quantity);
     localStorage.setItem("quantityCart", JSON.stringify(quantityCart - 1));
   }
 
   function handleIncrement(id) {
     dispatch(increment(id));
-    var t = shoppingCarts.map((item) =>
-      item.id == id ? { ...item, quantity: item.quantity + 1 } : item
+    // var t = shoppingCarts.map((item) =>
+    //   item.id == id ? { ...item, quantity: item.quantity + 1 } : item
+    // );
+    localStorage.setItem(
+      "shoppingCarts",
+      JSON.stringify(store.getState().cart.shoppingCarts)
     );
-    localStorage.setItem("shoppingCarts", JSON.stringify(t));
-    setShoppingCarts(t);
+    // setShoppingCarts(t);
   }
   function handleDecrease(id) {
     dispatch(decrease(id));
-    var t = shoppingCarts.map((item) =>
-      item.id == id ? { ...item, quantity: item.quantity - 1 } : item
+    // var t = shoppingCarts.map((item) =>
+    //   item.id == id ? { ...item, quantity: item.quantity - 1 } : item
+    // );
+    localStorage.setItem(
+      "shoppingCarts",
+      JSON.stringify(store.getState().cart.shoppingCarts)
     );
-    localStorage.setItem("shoppingCarts", JSON.stringify(t));
-    setShoppingCarts(t);
+    // setShoppingCarts(t);
   }
   return (
     <>

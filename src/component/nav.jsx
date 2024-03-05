@@ -4,7 +4,6 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
 import Badge from "@mui/material/Badge";
 import MenuIcon from "@mui/icons-material/Menu";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
@@ -16,10 +15,6 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
-import Divider from "@mui/material/Divider";
-import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
-import CloseIcon from "@mui/icons-material/Close";
-import Icon from "@mui/material/Icon";
 import PersonIcon from "@mui/icons-material/Person";
 import Shoppingcart from "./shoppingcart.jsx";
 

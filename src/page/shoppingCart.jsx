@@ -18,47 +18,49 @@ import {
 import { useEffect, useState } from "react";
 
 export default function shoppingCart() {
-  const [shoppingCarts, setShoppingCarts] = useState(
-    useSelector((state) => {
-      return state.cart.shoppingCarts;
-    })
-  );
-  const [products, setProducts] = useState(
-    useSelector((state) => {
-      return state.cart.products;
-    })
-  );
-  var t;
-  const [total, setTotalDate] = useState(
-    useSelector((state) => {
-      return state.cart.total;
-    })
-  );
+  const shoppingCarts = useSelector((state) => {
+    return state.cart.shoppingCarts;
+  });
+  const products = useSelector((state) => {
+    return state.cart.products;
+  });
+  const total = useSelector((state) => {
+    return state.cart.total;
+  });
   const dispatch = useDispatch();
   function removeFromCart(id) {
     dispatch(reduceQuantityCartShopping());
     dispatch(removeItemToCart(id));
-    var t = shoppingCarts.filter((item) => item.id != id);
-    localStorage.setItem("shoppingCarts", JSON.stringify(t));
-    setShoppingCarts(t);
+    // var t = shoppingCarts.filter((item) => item.id != id);
+    localStorage.setItem(
+      "shoppingCarts",
+      JSON.stringify(store.getState().cart.shoppingCarts)
+    );
+    // setShoppingCarts(t);
     var quantityCart = JSON.parse(localStorage.getItem("quantityCart"));
-    localStorage.setItem("quantityCart", JSON.stringify(quantityCart - 1));
+    localStorage.setItem("quantityCart", JSON.stringify(quantityCart - 1)); // from store
   }
   function handleIncrement(id) {
     dispatch(increment(id));
-    var t = shoppingCarts.map((item) =>
-      item.id == id ? { ...item, quantity: item.quantity + 1 } : item
+    // var t = shoppingCarts.map((item) =>
+    //   item.id == id ? { ...item, quantity: item.quantity + 1 } : item
+    // );
+    localStorage.setItem(
+      "shoppingCarts",
+      JSON.stringify(store.getState().cart.shoppingCarts)
     );
-    localStorage.setItem("shoppingCarts", JSON.stringify(t));
-    setShoppingCarts(t);
+    // setShoppingCarts(t);
   }
   function handleDecrease(id) {
     dispatch(decrease(id));
-    var t = shoppingCarts.map((item) =>
-      item.id == id ? { ...item, quantity: item.quantity - 1 } : item
+    // var t = shoppingCarts.map((item) =>
+    //   item.id == id ? { ...item, quantity: item.quantity - 1 } : item
+    // );
+    localStorage.setItem(
+      "shoppingCarts",
+      JSON.stringify(store.getState().cart.shoppingCarts)
     );
-    localStorage.setItem("shoppingCarts", JSON.stringify(t));
-    setShoppingCarts(t);
+    // setShoppingCarts(t);
   }
   const subscribe = store.subscribe(() => console.log("The state is update"));
   useEffect(() => {
@@ -68,16 +70,15 @@ export default function shoppingCart() {
           return response.json();
         })
         .then((data) => {
-          setProducts(data);
+          // setProducts(data);
           dispatch(setProductsArray(data));
         });
       var arrayExisti = localStorage.getItem("shoppingCarts");
-      if (arrayExisti != null) setShoppingCarts(JSON.parse(arrayExisti));
+      // if (arrayExisti != null) setShoppingCarts(JSON.parse(arrayExisti));
       dispatch(setShoppingCartsArray(JSON.parse(arrayExisti)));
     })();
   }, []);
   useEffect(() => {
-    console.log(products, "products");
     var total = shoppingCarts
       .map((item) => {
         return (
@@ -91,7 +92,7 @@ export default function shoppingCart() {
       .reduce((accumulator, currentValue) => {
         return accumulator + currentValue;
       }, 0);
-    setTotalDate(total);
+    // setTotalDate(total);
     dispatch(setTotal(total));
   }, [shoppingCarts]);
   return (

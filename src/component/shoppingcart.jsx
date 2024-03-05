@@ -9,37 +9,35 @@ import Typography from "@mui/material/Typography";
 import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
 import { store } from "../store";
-import { setShoppingCartsArray, removeItemToCart, setTotal } from "../state";
+import {
+  setShoppingCartsArray,
+  removeItemToCart,
+  setTotal,
+  setQuantityCart,
+} from "../state";
 
 export default function shoppingcart({ toggleDrawer }) {
-  const [shoppingCarts, setShoppingCarts] = useState(
-    useSelector((state) => {
-      return state.cart.shoppingCarts;
-    })
-  );
-  const [total, setTotalDate] = useState(
-    useSelector((state) => {
-      return state.cart.total;
-    })
-  );
+  const shoppingCarts = useSelector((state) => {
+    return state.cart.shoppingCarts;
+  });
+  const total = useSelector((state) => {
+    return state.cart.total;
+  });
   console.log(shoppingCarts, "shoppingCarts");
-  const [quantityCart, setQuantityCart] = useState(
-    useSelector((state) => state.cart.shoppingCart.quantity)
-  );
+  const quantityCart = useSelector((state) => state.cart.shoppingCart.quantity);
   const [products, setProducts] = useState([]);
-  var shoppingCartIds = shoppingCarts.map((item) => item.id);
   const dispatch = useDispatch();
 
   const subscribe = store.subscribe(() => {
-    console.log("store quantity", store.getState().cart.shoppingCarts);
+    console.log("store update", store.getState().cart.shoppingCarts);
   });
 
   function removeFromCart(id) {
     dispatch(removeItemToCart(id));
-    setQuantityCart(store.getState().cart.shoppingCart.quantity);
+    // setQuantityCart(store.getState().cart.shoppingCart.quantity);
     var t = store.getState().cart.shoppingCarts;
     console.log(store.getState().cart.shoppingCarts);
-    setShoppingCarts(store.getState().cart.shoppingCarts);
+    // setShoppingCarts(store.getState().cart.shoppingCarts);
     localStorage.setItem("shoppingCarts", JSON.stringify(t));
     localStorage.setItem("quantityCart", JSON.stringify(quantityCart - 1));
   }
@@ -53,10 +51,10 @@ export default function shoppingcart({ toggleDrawer }) {
         setProducts(data);
         var productsLocal = JSON.parse(localStorage.getItem("shoppingCarts"));
         var quantityCart = JSON.parse(localStorage.getItem("quantityCart"));
-        setQuantityCart(quantityCart);
+        dispatch(setQuantityCart(quantityCart));
         // if (productsLocal == null) setShoppingCarts([]);
         // else {
-        setShoppingCarts(productsLocal);
+        // setShoppingCarts(productsLocal);
         dispatch(setShoppingCartsArray(productsLocal));
         // }
       })
@@ -77,7 +75,7 @@ export default function shoppingcart({ toggleDrawer }) {
       .reduce((accumulator, currentValue) => {
         return accumulator + currentValue;
       }, 0);
-    setTotalDate(total);
+    // setTotalDate(total);
     dispatch(setTotal(total));
   }, [shoppingCarts]);
   return (
@@ -148,7 +146,7 @@ export default function shoppingcart({ toggleDrawer }) {
             <Button
               variant="contained"
               size="large"
-              sx={{ padding: 1, paddingX: 1, marginTop: 2, minWidth: 250 }}
+              sx={{ padding: 1, paddingX: 1, marginTop: 2, minWidth: 300 }}
               component={Link}
               to="/shoppingCart/cart"
               onClick={toggleDrawer("right", false)}
@@ -160,7 +158,7 @@ export default function shoppingcart({ toggleDrawer }) {
             <Button
               variant="contained"
               size="large"
-              sx={{ padding: 1, paddingX: 1, marginTop: 2, minWidth: 250 }}
+              sx={{ padding: 1, paddingX: 1, marginTop: 2, minWidth: 300 }}
               component={Link}
             >
               checkout
