@@ -7,7 +7,14 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 
-export default function productItem({ item, shoppingCarts }) {
+export default function productItem({
+  item,
+  shoppingCarts,
+  handleDecrease,
+  handleIncrement,
+  handleAddToCart,
+  removeFromCart,
+}) {
   return (
     <>
       <Card

@@ -135,10 +135,24 @@ export default function home() {
             <Grid item xs={3} sm={3} md={3} lg={2}>
               {productsFilter.length == 0
                 ? products.map((item) => (
-                    <Product item={item} shoppingCarts={shoppingCarts} />
+                    <Product
+                      item={item}
+                      shoppingCarts={shoppingCarts}
+                      handleDecrease={handleDecrease}
+                      handleIncrement={handleIncrement}
+                      removeFromCart={removeFromCart}
+                      handleAddToCart={handleAddToCart}
+                    />
                   ))
                 : productsFilter.map((item) => (
-                    <Product item={item} shoppingCarts={shoppingCarts} />
+                    <Product
+                      item={item}
+                      shoppingCarts={shoppingCarts}
+                      handleDecrease={handleDecrease}
+                      handleIncrement={handleIncrement}
+                      removeFromCart={removeFromCart}
+                      handleAddToCart={handleAddToCart}
+                    />
                   ))}
             </Grid>
           </Grid>
