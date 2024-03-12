@@ -129,7 +129,12 @@ export default function nav() {
             </Button>
           </Box>
           <Box sx={{ flexGrow: 1 }} />
-          <IconButton size="large" color="inherit">
+          <IconButton
+            size="large"
+            color="inherit"
+            component={Link}
+            to="/shoppingCart/loggin"
+          >
             <PersonIcon />
           </IconButton>
           <Box sx={{ display: { xs: "none", md: "flex" } }}>

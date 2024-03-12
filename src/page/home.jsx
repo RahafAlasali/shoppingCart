@@ -2,10 +2,7 @@ import React, { useLayoutEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import Container from "@mui/material/Container";
-import Card from "@mui/material/Card";
-import CardMedia from "@mui/material/CardMedia";
-import CardContent from "@mui/material/CardContent";
-import CardActions from "@mui/material/CardActions";
+
 import {
   increment,
   decrease,
