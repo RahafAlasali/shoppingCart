@@ -23,7 +23,9 @@ export default function nav() {
     (state) => state.cart.shoppingCart.quantity
   );
   const [quantityCart, setQuantityCart] = useState(0);
-
+  var isLogin = useSelector((state) => {
+    return state.auth.isLogin;
+  });
   useEffect(() => {
     setQuantityCart(JSON.parse(localStorage.getItem("quantityCart")));
   }, [quantityCartA]);
@@ -123,10 +125,11 @@ export default function nav() {
             >
               Cart
             </Button>
-
-            <Button color="inherit" sx={{ mx: 2 }}>
-              About
-            </Button>
+            {isLogin && (
+              <Button color="inherit" sx={{ mx: 2 }}>
+                About
+              </Button>
+            )}
           </Box>
           <Box sx={{ flexGrow: 1 }} />
           <IconButton

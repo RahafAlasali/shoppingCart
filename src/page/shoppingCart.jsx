@@ -3,7 +3,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { useSelector, useDispatch } from "react-redux";
-import { store } from "../store";
+import { store } from "../store/index";
 import Divider from "@mui/material/Divider";
 
 import {
@@ -13,7 +13,7 @@ import {
   setProductsArray,
   setShoppingCartsArray,
   setTotal,
-} from "../state";
+} from "../store/cart";
 import { useEffect, useState } from "react";
 
 export default function shoppingCart() {

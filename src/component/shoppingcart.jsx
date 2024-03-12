@@ -14,7 +14,7 @@ import {
   removeItemToCart,
   setTotal,
   setQuantityCart,
-} from "../state";
+} from "../store/cart";
 
 export default function shoppingcart({ toggleDrawer }) {
   const shoppingCarts = useSelector((state) => {
