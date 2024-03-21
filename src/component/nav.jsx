@@ -17,6 +17,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import PersonIcon from "@mui/icons-material/Person";
 import Shoppingcart from "./shoppingcart.jsx";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 export default function nav() {
   const quantityCartA = useSelector(
@@ -125,21 +126,32 @@ export default function nav() {
             >
               Cart
             </Button>
-            {isLogin && (
-              <Button color="inherit" sx={{ mx: 2 }}>
-                About
-              </Button>
-            )}
+            <Button color="inherit" sx={{ mx: 2 }}>
+              About
+            </Button>
           </Box>
           <Box sx={{ flexGrow: 1 }} />
-          <IconButton
-            size="large"
-            color="inherit"
-            component={Link}
-            to="/shoppingCart/loggin"
-          >
-            <PersonIcon />
-          </IconButton>
+          {!isLogin && (
+            <Button
+              size="large"
+              color="inherit"
+              component={Link}
+              to="/shoppingCart/loggin"
+              sx={{ mx: 2 }}
+            >
+              Login
+            </Button>
+          )}
+          {isLogin && (
+            <Button
+              size="large"
+              color="inherit"
+              component={Link}
+              sx={{ mx: 2 }}
+            >
+              logout
+            </Button>
+          )}
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <IconButton
               size="large"

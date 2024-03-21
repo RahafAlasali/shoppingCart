@@ -8,17 +8,14 @@ import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
 import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setLogin } from "../store/auth/index";
 
 export default function loggin() {
   let navigate = useNavigate();
+  const dispatch = useDispatch();
   function onSubmit() {
-    console.log(
-      "Form",
-      JSON.stringify({
-        username: "mor_2314",
-        password: "83r5^_",
-      })
-    );
+    console.log("Form");
     fetch("https://fakestoreapi.com/auth/login", {
       method: "POST",
       body: JSON.stringify({
@@ -31,11 +28,10 @@ export default function loggin() {
     })
       .then((res) => {
         navigate("/shoppingCart");
-        // localStorage.setItem("token", JSON.stringify(res.token));
         return res.json();
       })
       .then((json) => {
-        //set loggin true in stoe
+        dispatch(setLogin(true));
         localStorage.setItem("token", JSON.stringify(json.token));
       });
   }
