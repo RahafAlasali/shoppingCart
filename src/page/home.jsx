@@ -11,7 +11,9 @@ import {
   setProductsArray,
   setShoppingCartsArray,
   setQuantityCart,
+  setTotal,
 } from "../store/cart";
+import { setLogin } from "../store/auth";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
@@ -33,6 +35,9 @@ export default function home() {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    if (localStorage.getItem("token")) {
+      dispatch(setLogin(true));
+    }
     fetch("https://fakestoreapi.com/products")
       .then((response) => {
         return response.json();
@@ -56,6 +61,22 @@ export default function home() {
       })
       .catch((error) => {});
   }, []);
+  useEffect(() => {
+    var total = shoppingCarts
+      .map((item) => {
+        return (
+          parseInt(
+            products.find((M) => {
+              return M.id == item.id;
+            })?.price
+          ) * item.quantity
+        );
+      })
+      .reduce((accumulator, currentValue) => {
+        return accumulator + currentValue;
+      }, 0);
+    dispatch(setTotal(total));
+  }, [shoppingCarts]);
 
   function handleAddToCart(id) {
     dispatch(addItemToCart(id));

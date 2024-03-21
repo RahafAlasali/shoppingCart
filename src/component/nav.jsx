@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -15,9 +15,8 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
-import PersonIcon from "@mui/icons-material/Person";
 import Shoppingcart from "./shoppingcart.jsx";
-import LogoutIcon from "@mui/icons-material/Logout";
+import { setLogin } from "../store/auth/index";
 
 export default function nav() {
   const quantityCartA = useSelector(
@@ -27,6 +26,7 @@ export default function nav() {
   var isLogin = useSelector((state) => {
     return state.auth.isLogin;
   });
+  const dispatch = useDispatch();
   useEffect(() => {
     setQuantityCart(JSON.parse(localStorage.getItem("quantityCart")));
   }, [quantityCartA]);
@@ -76,6 +76,10 @@ export default function nav() {
     </Box>
   );
   const cartDrawer = () => <Shoppingcart toggleDrawer={toggleDrawer} />;
+  function logout() {
+    localStorage.removeItem("token");
+    dispatch(setLogin(false));
+  }
   return (
     <>
       <AppBar position="static">
@@ -148,6 +152,7 @@ export default function nav() {
               color="inherit"
               component={Link}
               sx={{ mx: 2 }}
+              onClick={() => logout()}
             >
               logout
             </Button>

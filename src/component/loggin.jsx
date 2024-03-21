@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
@@ -9,18 +9,20 @@ import CardActions from "@mui/material/CardActions";
 import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setLogin } from "../store/auth/index";
+import { setLogin } from "../store/auth";
 
 export default function loggin() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   let navigate = useNavigate();
   const dispatch = useDispatch();
-  function onSubmit() {
-    console.log("Form");
+  function onSubmit(e) {
+    e.preventDefault();
     fetch("https://fakestoreapi.com/auth/login", {
       method: "POST",
       body: JSON.stringify({
-        username: "mor_2314",
-        password: "83r5^_",
+        username: username,
+        password: password,
       }),
       headers: {
         "Content-Type": "application/json",
@@ -40,24 +42,35 @@ export default function loggin() {
       <Container maxWidth="lg">
         <Box m={4} sx={{ display: "flex", justifyContent: "center" }}>
           <Card sx={{ padding: 4, m: 3 }}>
-            <div>
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                  Loggin
-                </Typography>
-              </CardContent>
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="div" py={0}>
+                Loggin
+              </Typography>
+            </CardContent>
+            <form onSubmit={onSubmit}>
               <Box marginTop={2}>
-                <TextField required label="username" />
+                <TextField
+                  required
+                  label="username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                />
               </Box>
               <Box marginTop={2}>
-                <TextField required label="Password" type="password" />
+                <TextField
+                  required
+                  label="Password"
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
               </Box>
               <CardActions sx={{ marginTop: 2, padding: 0 }}>
-                <Button type="submit" variant="contained" onClick={onSubmit}>
+                <Button type="submit" variant="contained">
                   Submit
                 </Button>
               </CardActions>
-            </div>
+            </form>
           </Card>
         </Box>
       </Container>
