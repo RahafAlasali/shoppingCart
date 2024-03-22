@@ -28,7 +28,7 @@ export default function loggin() {
       },
     })
       .then((res) => {
-        navigate("/shoppingCart");
+        if (res.status == 200) navigate("/shoppingCart");
         return res.json();
       })
       .then((json) => {
