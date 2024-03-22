@@ -168,14 +168,16 @@ export default function home() {
                   </Grid>
                 ))
               : productsFilter.map((item) => (
-                  <Product
-                    item={item}
-                    shoppingCarts={shoppingCarts}
-                    handleDecrease={handleDecrease}
-                    handleIncrement={handleIncrement}
-                    removeFromCart={removeFromCart}
-                    handleAddToCart={handleAddToCart}
-                  />
+                  <Grid xs={10} sm={6} md={5} lg={4}>
+                    <Product
+                      item={item}
+                      shoppingCarts={shoppingCarts}
+                      handleDecrease={handleDecrease}
+                      handleIncrement={handleIncrement}
+                      removeFromCart={removeFromCart}
+                      handleAddToCart={handleAddToCart}
+                    />
+                  </Grid>
                 ))}
           </Grid>
           {/* </Grid> */}

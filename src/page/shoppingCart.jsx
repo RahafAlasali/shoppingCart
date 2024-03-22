@@ -104,7 +104,7 @@ export default function shoppingCart() {
                   {products.map((itemCart) => {
                     return (
                       itemCart.id == item.id && (
-                        <Grid xs={10} sm={3} md={2} lg={2}>
+                        <Grid xs={10} sm={2} md={2} lg={2}>
                           <Box>
                             <img
                               src={itemCart.image}
@@ -116,11 +116,29 @@ export default function shoppingCart() {
                       )
                     );
                   })}
-                  <Grid xs={10} sm={7} md={7} lg={7}>
-                    <Grid container spacing={1}>
+                  <Grid
+                    xs={12}
+                    sm={6}
+                    md={7}
+                    lg={7}
+                    display="flex"
+                    alignItems="center"
+                  >
+                    <Grid
+                      container
+                      spacing={1}
+                      display="flex"
+                      alignItems="center"
+                    >
                       <Grid xs={10} sm={7} md={7} lg={5}>
-                        <Typography fontSize={20}>Title</Typography>
-                        <Typography variant="subtitle2" component="div">
+                        <Typography fontSize={20} textAlign={"center"}>
+                          Title
+                        </Typography>
+                        <Typography
+                          variant="subtitle2"
+                          component="div"
+                          textAlign={"center"}
+                        >
                           {products.map((itemA) => {
                             return itemA.id == item.id ? itemA.title : null;
                           })}
@@ -128,7 +146,9 @@ export default function shoppingCart() {
                       </Grid>
 
                       <Grid xs={10} sm={2} md={2} lg={2}>
-                        <Typography fontSize={20}>Price</Typography>
+                        <Typography fontSize={20} textAlign={"center"}>
+                          Price
+                        </Typography>
                         <Typography
                           variant="subtitle2"
                           component="div"
@@ -144,7 +164,9 @@ export default function shoppingCart() {
                       </Grid>
 
                       <Grid xs={10} sm={2} md={2} lg={2}>
-                        <Typography fontSize={20}>Quantity</Typography>
+                        <Typography fontSize={20} textAlign={"center"}>
+                          Quantity
+                        </Typography>
                         <Typography
                           variant="subtitle2"
                           textAlign={"center"}
@@ -155,7 +177,14 @@ export default function shoppingCart() {
                       </Grid>
                     </Grid>
                   </Grid>
-                  <Grid xs={10} sm={2} md={3} lg={3}>
+                  <Grid
+                    xs={12}
+                    sm={4}
+                    md={3}
+                    lg={3}
+                    display="flex"
+                    alignItems="center"
+                  >
                     <Button
                       variant="contained"
                       size="small"
