@@ -5,6 +5,7 @@ import Box from "@mui/material/Box";
 import { useSelector, useDispatch } from "react-redux";
 import { store } from "../store/index";
 import Divider from "@mui/material/Divider";
+import Grid from "@mui/material/Grid";
 
 import {
   increment,
@@ -96,80 +97,92 @@ export default function shoppingCart() {
               <Box
                 key={item.id}
                 sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  maxHeight: "150px",
-                  alignItems: "center",
                   marginY: "15px",
                 }}
               >
-                {products.map((itemCart) => {
-                  return itemCart.id == item.id ? (
-                    <Box>
-                      <img src={itemCart.image} height={130} width={130}></img>
-                    </Box>
-                  ) : null;
-                })}
-                <Box minWidth={100} maxWidth={150} textAlign={"center"}>
-                  <Typography fontSize={20}>Title</Typography>
-                  <Typography variant="subtitle2" component="div">
-                    {products.map((itemA) => {
-                      return itemA.id == item.id ? itemA.title : null;
-                    })}
-                  </Typography>
-                </Box>
-                <Box>
-                  <Typography fontSize={20}>Price</Typography>
-                  <Typography
-                    variant="subtitle2"
-                    component="div"
-                    sx={{ margin: "auto" }}
-                    textAlign={"center"}
-                  >
-                    {products.map((itemCart) => {
-                      return itemCart.id == item.id
-                        ? parseInt(itemCart.price)
-                        : null;
-                    })}
-                  </Typography>
-                </Box>
-                <Box>
-                  <Typography fontSize={20}>Quantity</Typography>
-                  <Typography
-                    variant="subtitle2"
-                    textAlign={"center"}
-                    component="div"
-                  >
-                    {item.quantity}
-                  </Typography>
-                </Box>
-                <div>
-                  <Button
-                    variant="contained"
-                    size="small"
-                    sx={{ mx: 1 }}
-                    onClick={() => handleDecrease(item.id)}
-                  >
-                    -
-                  </Button>
-                  <Button
-                    variant="contained"
-                    size="small"
-                    sx={{ mx: 1 }}
-                    onClick={() => handleIncrement(item.id)}
-                  >
-                    +
-                  </Button>
+                <Grid container spacing={1}>
+                  {products.map((itemCart) => {
+                    return (
+                      itemCart.id == item.id && (
+                        <Grid xs={10} sm={3} md={2} lg={2}>
+                          <Box>
+                            <img
+                              src={itemCart.image}
+                              height={130}
+                              style={{ maxWidth: "95%" }}
+                            ></img>
+                          </Box>
+                        </Grid>
+                      )
+                    );
+                  })}
+                  <Grid xs={10} sm={7} md={7} lg={7}>
+                    <Grid container spacing={1}>
+                      <Grid xs={10} sm={7} md={7} lg={5}>
+                        <Typography fontSize={20}>Title</Typography>
+                        <Typography variant="subtitle2" component="div">
+                          {products.map((itemA) => {
+                            return itemA.id == item.id ? itemA.title : null;
+                          })}
+                        </Typography>
+                      </Grid>
 
-                  <Button
-                    variant="contained"
-                    sx={{ mx: 1 }}
-                    size="small"
-                    onClick={() => removeFromCart(item.id)}
-                  >
-                    remove
-                  </Button>
-                </div>
+                      <Grid xs={10} sm={2} md={2} lg={2}>
+                        <Typography fontSize={20}>Price</Typography>
+                        <Typography
+                          variant="subtitle2"
+                          component="div"
+                          sx={{ margin: "auto" }}
+                          textAlign={"center"}
+                        >
+                          {products.map((itemCart) => {
+                            return itemCart.id == item.id
+                              ? parseInt(itemCart.price)
+                              : null;
+                          })}
+                        </Typography>
+                      </Grid>
+
+                      <Grid xs={10} sm={2} md={2} lg={2}>
+                        <Typography fontSize={20}>Quantity</Typography>
+                        <Typography
+                          variant="subtitle2"
+                          textAlign={"center"}
+                          component="div"
+                        >
+                          {item.quantity}
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                  <Grid xs={10} sm={2} md={3} lg={3}>
+                    <Button
+                      variant="contained"
+                      size="small"
+                      sx={{ mx: 1, mt: 1 }}
+                      onClick={() => handleDecrease(item.id)}
+                    >
+                      -
+                    </Button>
+                    <Button
+                      variant="contained"
+                      size="small"
+                      sx={{ mx: 1, mt: 1 }}
+                      onClick={() => handleIncrement(item.id)}
+                    >
+                      +
+                    </Button>
+
+                    <Button
+                      variant="contained"
+                      sx={{ mx: 1, mt: 1 }}
+                      size="small"
+                      onClick={() => removeFromCart(item.id)}
+                    >
+                      remove
+                    </Button>
+                  </Grid>
+                </Grid>
               </Box>
               <Divider sx={{ backgroundColor: "#e3dede" }} />
             </>

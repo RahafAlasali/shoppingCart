@@ -20,8 +20,7 @@ export default function productItem({
       <Card
         key={item.id}
         sx={{
-          maxWidth: 350,
-          minWidth: 350,
+          width: "95%",
           m: 1,
           display: "inline-block",
         }}

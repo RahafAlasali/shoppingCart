@@ -121,37 +121,42 @@ export default function home() {
   }
   return (
     <>
-      <Container maxWidth="lg">
+      <Container>
         <Box sx={{ display: "flex", justifyContent: "center" }}>
           {productsFilter.map((item) => (
             <h1>{item.name}</h1>
           ))}
-          <Stack spacing={2} m={2} direction="row">
-            <Button
-              variant="contained"
-              onClick={() => {
-                handelFilter("all");
-              }}
-            >
-              all
-            </Button>
-            {categories.map((item) => (
+          {products.length != 0 && (
+            <Stack spacing={2} m={2} direction="row">
               <Button
-                variant="outlined"
+                sx={{ display: { sm: "block", xs: "none" } }}
+                variant="contained"
                 onClick={() => {
-                  handelFilter(item);
+                  handelFilter("all");
                 }}
               >
-                {item}
+                all
               </Button>
-            ))}
-          </Stack>
+
+              {categories.map((item) => (
+                <Button
+                  sx={{ display: { sm: "block", xs: "none" } }}
+                  variant="outlined"
+                  onClick={() => {
+                    handelFilter(item);
+                  }}
+                >
+                  {item}
+                </Button>
+              ))}
+            </Stack>
+          )}
         </Box>
-        <Box sx={{ display: "flex", justifyContent: "center" }}>
-          <Grid spacing={2}>
-            <Grid item xs={3} sm={3} md={3} lg={2}>
-              {productsFilter.length == 0
-                ? products.map((item) => (
+        <Box sx={{ width: "100%" }}>
+          <Grid container spacing={1}>
+            {productsFilter.length == 0
+              ? products.map((item) => (
+                  <Grid xs={10} sm={6} md={5} lg={4}>
                     <Product
                       item={item}
                       shoppingCarts={shoppingCarts}
@@ -160,19 +165,20 @@ export default function home() {
                       removeFromCart={removeFromCart}
                       handleAddToCart={handleAddToCart}
                     />
-                  ))
-                : productsFilter.map((item) => (
-                    <Product
-                      item={item}
-                      shoppingCarts={shoppingCarts}
-                      handleDecrease={handleDecrease}
-                      handleIncrement={handleIncrement}
-                      removeFromCart={removeFromCart}
-                      handleAddToCart={handleAddToCart}
-                    />
-                  ))}
-            </Grid>
+                  </Grid>
+                ))
+              : productsFilter.map((item) => (
+                  <Product
+                    item={item}
+                    shoppingCarts={shoppingCarts}
+                    handleDecrease={handleDecrease}
+                    handleIncrement={handleIncrement}
+                    removeFromCart={removeFromCart}
+                    handleAddToCart={handleAddToCart}
+                  />
+                ))}
           </Grid>
+          {/* </Grid> */}
         </Box>
       </Container>
     </>

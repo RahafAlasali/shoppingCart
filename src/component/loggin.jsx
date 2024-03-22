@@ -12,17 +12,16 @@ import { useDispatch } from "react-redux";
 import { setLogin } from "../store/auth";
 
 export default function loggin() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
   let navigate = useNavigate();
   const dispatch = useDispatch();
   function onSubmit(e) {
     e.preventDefault();
+    console.log(e.target.username.value, "Form");
     fetch("https://fakestoreapi.com/auth/login", {
       method: "POST",
       body: JSON.stringify({
-        username: username,
-        password: password,
+        username: e.target.username.value,
+        password: e.target.password.value,
       }),
       headers: {
         "Content-Type": "application/json",
@@ -49,20 +48,14 @@ export default function loggin() {
             </CardContent>
             <form onSubmit={onSubmit}>
               <Box marginTop={2}>
-                <TextField
-                  required
-                  label="username"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                />
+                <TextField required label="username" name="username" />
               </Box>
               <Box marginTop={2}>
                 <TextField
                   required
                   label="Password"
                   type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  name="password"
                 />
               </Box>
               <CardActions sx={{ marginTop: 2, padding: 0 }}>

@@ -113,7 +113,7 @@ export default function nav() {
             Shopping
           </Button>
           <Box sx={{ flexGrow: 1 }} />
-          <Box>
+          <Box sx={{ display: { sm: "block", xs: "none" } }}>
             <Button
               component={Link}
               to="/shoppingCart"
