@@ -29,17 +29,36 @@ export default function productItem({
           sx={{
             height: 140,
             minHeight: 200,
+            marginTop: 1,
             backgroundSize: "contain",
           }}
           image={item.image}
           title="green iguana"
         />
-        <CardContent sx={{ minHeight: 150 }}>
-          <Typography gutterBottom variant="h6" component="div">
+        <CardContent
+          sx={{
+            minHeight: 150,
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-around",
+          }}
+        >
+          <Typography
+            gutterBottom
+            variant="h6"
+            component="div"
+            fontSize="medium"
+          >
             {item.title}
           </Typography>
-          <Typography gutterBottom variant="subtitle2" component="div">
-            {parseInt(item.price)}
+          <Typography
+            gutterBottom
+            variant="subtitle2"
+            component="div"
+            fontWeight="bold"
+            fontSize="large"
+          >
+            {parseInt(item.price)} $
           </Typography>
         </CardContent>
         <CardActions

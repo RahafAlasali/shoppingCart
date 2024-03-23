@@ -132,7 +132,7 @@ export default function shoppingCart() {
                     >
                       <Grid xs={10} sm={7} md={7} lg={5}>
                         <Typography fontSize={20} textAlign={"center"}>
-                          Title
+                          Product
                         </Typography>
                         <Typography
                           variant="subtitle2"
