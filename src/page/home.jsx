@@ -180,7 +180,6 @@ export default function home() {
                   </Grid>
                 ))}
           </Grid>
-          {/* </Grid> */}
         </Box>
       </Container>
     </>

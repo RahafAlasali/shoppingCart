@@ -106,13 +106,16 @@ export default function productItem({
               </Button>
             </Box>
           ) : (
-            <Button
-              variant="contained"
-              sx={{ mx: 2 }}
-              onClick={() => handleAddToCart(item.id)}
-            >
-              Add to card
-            </Button>
+            <Box>
+              <Button
+                variant="contained"
+                sx={{ mx: 2, paddingX: 3 }}
+                size="small"
+                onClick={() => handleAddToCart(item.id)}
+              >
+                Add to card
+              </Button>
+            </Box>
           )}
         </CardActions>
       </Card>

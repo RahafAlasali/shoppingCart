@@ -108,7 +108,7 @@ export default function nav() {
             component={Link}
             to="/shoppingCart"
             color="inherit"
-            sx={{ mx: 2 }}
+            sx={{ mx: 2, fontSize: "larger" }}
           >
             Shopping
           </Button>
