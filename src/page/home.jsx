@@ -22,36 +22,38 @@ import { store } from "../store";
 import Product from "../component/productItem";
 
 export default function home() {
-  const [products, setProducts] = useState([]);
+  const products = useSelector((state) => {
+    return state.cart.products;
+  });
   const quantityCart = useSelector((state) => {
     return state.cart.shoppingCart.quantity;
   });
   const [productsFilter, setProductsFilter] = useState([]);
   const [categories, setCategories] = useState([]);
-  console.log(productsFilter, "productsFilter");
   const shoppingCarts = useSelector((state) => {
     return state.cart.shoppingCarts;
   });
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (localStorage.getItem("token")) {
-      dispatch(setLogin(true));
-    }
-    fetch("https://fakestoreapi.com/products")
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        setProducts(data);
-        dispatch(setProductsArray(data));
-        var productsLocal = JSON.parse(localStorage.getItem("shoppingCarts"));
-        var quantityCart = JSON.parse(localStorage.getItem("quantityCart"));
-        dispatch(setQuantityCart(quantityCart));
-        dispatch(setShoppingCartsArray(productsLocal));
-      })
-      .catch((error) => {})
-      .finally(() => {});
+    (async () => {
+      if (localStorage.getItem("token")) {
+        dispatch(setLogin(true));
+      }
+
+      await fetch("https://fakestoreapi.com/products")
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          dispatch(setProductsArray(data));
+          var productsLocal = JSON.parse(localStorage.getItem("shoppingCarts"));
+          var quantityCart = JSON.parse(localStorage.getItem("quantityCart"));
+          dispatch(setQuantityCart(quantityCart));
+          dispatch(setShoppingCartsArray(productsLocal));
+        })
+        .catch((error) => {});
+    })();
     fetch("https://fakestoreapi.com/products/categories")
       .then((response) => {
         return response.json();
@@ -140,7 +142,12 @@ export default function home() {
 
               {categories.map((item) => (
                 <Button
-                  sx={{ display: { sm: "block", xs: "none" } }}
+                  sx={{
+                    display: { sm: "block", xs: "none" },
+                    "&:active": {
+                      backgroundColor: "red",
+                    },
+                  }}
                   variant="outlined"
                   onClick={() => {
                     handelFilter(item);

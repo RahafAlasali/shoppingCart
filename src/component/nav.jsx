@@ -108,14 +108,14 @@ export default function nav() {
             component={Link}
             to="/shoppingCart"
             color="inherit"
-            sx={{ mx: 2, fontSize: "larger" }}
+            sx={{ mx: 1, fontSize: "larger" }}
           >
-            Shopping
+            Store
           </Button>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { sm: "block", xs: "none" } }}>
             <Button
-              component={Link}
+              component={NavLink}
               to="/shoppingCart"
               color="inherit"
               sx={{ mx: 2 }}
@@ -124,7 +124,7 @@ export default function nav() {
             </Button>
             <Button
               color="inherit"
-              component={Link}
+              component={NavLink}
               to="/shoppingCart/cart"
               sx={{ mx: 2 }}
             >

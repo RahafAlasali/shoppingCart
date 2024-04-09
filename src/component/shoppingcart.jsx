@@ -9,12 +9,7 @@ import Typography from "@mui/material/Typography";
 import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
 import { store } from "../store";
-import {
-  setShoppingCartsArray,
-  removeItemToCart,
-  setTotal,
-  setQuantityCart,
-} from "../store/cart";
+import { removeItemToCart, setTotal } from "../store/cart";
 
 export default function shoppingcart({ toggleDrawer }) {
   const shoppingCarts = useSelector((state) => {
@@ -23,13 +18,15 @@ export default function shoppingcart({ toggleDrawer }) {
   const total = useSelector((state) => {
     return state.cart.total;
   });
-  console.log(shoppingCarts, "shoppingCarts");
   const quantityCart = useSelector((state) => state.cart.shoppingCart.quantity);
-  const [products, setProducts] = useState([]);
+  const products = useSelector((state) => state.cart.products);
   const dispatch = useDispatch();
 
   const subscribe = store.subscribe(() => {
-    console.log("store update", store.getState().cart.shoppingCarts);
+    console.log(
+      "store update ........... ",
+      store.getState().cart.shoppingCarts
+    );
   });
 
   function removeFromCart(id) {
@@ -39,37 +36,6 @@ export default function shoppingcart({ toggleDrawer }) {
     localStorage.setItem("quantityCart", JSON.stringify(quantityCart - 1));
   }
 
-  useEffect(() => {
-    fetch("https://fakestoreapi.com/products")
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        setProducts(data);
-        var productsLocal = JSON.parse(localStorage.getItem("shoppingCarts"));
-        var quantityCart = JSON.parse(localStorage.getItem("quantityCart"));
-        dispatch(setQuantityCart(quantityCart));
-        dispatch(setShoppingCartsArray(productsLocal));
-      })
-      .catch((error) => {})
-      .finally(() => {});
-  }, []);
-  useEffect(() => {
-    var total = shoppingCarts
-      .map((item) => {
-        return (
-          parseInt(
-            products.find((M) => {
-              return M.id == item.id;
-            })?.price
-          ) * item.quantity
-        );
-      })
-      .reduce((accumulator, currentValue) => {
-        return accumulator + currentValue;
-      }, 0);
-    dispatch(setTotal(total));
-  }, [shoppingCarts]);
   return (
     <>
       <Box minWidth={250} p={4}>
@@ -128,16 +94,16 @@ export default function shoppingcart({ toggleDrawer }) {
 
           <Divider />
           <Box py={2} sx={{ display: "flex", justifyContent: "space-between" }}>
-            <Typography>Subtotal</Typography>
-            <Typography> {total}</Typography>
+            <Typography sx={{ fontSize: "larger" }}>Subtotal</Typography>
+            <Typography sx={{ fontSize: "larger" }}>$ {total}</Typography>
           </Box>
           <Divider />
         </Box>
-        <Box>
+        <Box marginTop={4}>
           <Box>
             <Button
               variant="contained"
-              size="large"
+              fullWidth
               sx={{ padding: 1, paddingX: 1, marginTop: 2, minWidth: 300 }}
               component={Link}
               to="/shoppingCart/cart"
@@ -149,7 +115,7 @@ export default function shoppingcart({ toggleDrawer }) {
           <Box>
             <Button
               variant="contained"
-              size="large"
+              fullWidth
               sx={{ padding: 1, paddingX: 1, marginTop: 2, minWidth: 300 }}
               component={Link}
             >

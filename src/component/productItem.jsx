@@ -6,6 +6,7 @@ import CardActions from "@mui/material/CardActions";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
+import Rating from "@mui/material/Rating";
 
 export default function productItem({
   item,
@@ -15,6 +16,7 @@ export default function productItem({
   handleAddToCart,
   removeFromCart,
 }) {
+  // const [value, setValue] = item.rating.rate;
   return (
     <>
       <Card
@@ -51,6 +53,13 @@ export default function productItem({
           >
             {item.title}
           </Typography>
+
+          <Rating
+            name="read-only"
+            value={item.rating.rate}
+            precision={0.5}
+            readOnly
+          />
           <Typography
             gutterBottom
             variant="subtitle2"
@@ -58,7 +67,7 @@ export default function productItem({
             fontWeight="bold"
             fontSize="large"
           >
-            {parseInt(item.price)} $
+            ${parseInt(item.price)}
           </Typography>
         </CardContent>
         <CardActions
