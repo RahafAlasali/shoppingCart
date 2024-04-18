@@ -131,7 +131,10 @@ export default function home() {
           {products.length != 0 && (
             <Stack spacing={2} m={2} direction="row">
               <Button
-                sx={{ display: { sm: "block", xs: "none" } }}
+                sx={{
+                  display: { sm: "block", xs: "none" },
+                  fontSize: { sm: "x-small", md: "small" },
+                }}
                 variant="contained"
                 onClick={() => {
                   handelFilter("all");
@@ -144,6 +147,7 @@ export default function home() {
                 <Button
                   sx={{
                     display: { sm: "block", xs: "none" },
+                    fontSize: { sm: "x-small", md: "small" },
                   }}
                   variant="outlined"
                   onClick={() => {
@@ -157,7 +161,11 @@ export default function home() {
           )}
         </Box>
         <Box sx={{ width: "100%" }}>
-          <Grid container spacing={1}>
+          <Grid
+            container
+            spacing={1}
+            justifyContent={{ xs: "center", md: "start" }}
+          >
             {productsFilter.length == 0
               ? products.map((item) => (
                   <Grid xs={10} sm={6} md={5} lg={4}>
