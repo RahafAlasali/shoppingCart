@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { store } from "../store/index";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 import {
   increment,
@@ -88,10 +89,14 @@ export default function shoppingCart() {
   return (
     <>
       <Container maxWidth="lg" sx={{ mb: 5 }}>
-        <Typography variant="h4" component="div" sx={{ m: 5 }}>
+        <Typography
+          variant="h4"
+          component="div"
+          sx={{ m: 5, textAlign: { xs: "center", sm: "start" } }}
+        >
           Cart
         </Typography>
-        <Box sx={{ m: 5 }}>
+        <Box sx={{ m: 2 }}>
           {shoppingCarts.map((item) => (
             <>
               <Box
@@ -100,11 +105,11 @@ export default function shoppingCart() {
                   marginY: "15px",
                 }}
               >
-                <Grid container spacing={1}>
+                <Grid container spacing={1} justifyContent="center">
                   {products.map((itemCart) => {
                     return (
                       itemCart.id == item.id && (
-                        <Grid xs={10} sm={3} md={2} lg={2}>
+                        <Grid xs={10} sm={2} md={2} lg={2}>
                           <Box textAlign="center">
                             <img
                               src={itemCart.image}
@@ -185,11 +190,12 @@ export default function shoppingCart() {
                     lg={3}
                     display="flex"
                     alignItems="center"
+                    justifyContent="center"
                   >
                     <Button
                       variant="contained"
                       size="small"
-                      sx={{ mx: 1, mt: 1 }}
+                      sx={{ mx: 0.5, mt: 1, minWidth: "unset", px: 3 }}
                       onClick={() => handleDecrease(item.id)}
                     >
                       -
@@ -197,7 +203,7 @@ export default function shoppingCart() {
                     <Button
                       variant="contained"
                       size="small"
-                      sx={{ mx: 1, mt: 1 }}
+                      sx={{ mx: 0.5, mt: 1, minWidth: "unset", px: 3 }}
                       onClick={() => handleIncrement(item.id)}
                     >
                       +
@@ -205,11 +211,11 @@ export default function shoppingCart() {
 
                     <Button
                       variant="contained"
-                      sx={{ mx: 1, mt: 1 }}
+                      sx={{ mx: 0.5, mt: 1 }}
                       size="small"
                       onClick={() => removeFromCart(item.id)}
                     >
-                      remove
+                      <DeleteIcon fontSize="small" />
                     </Button>
                   </Grid>
                 </Grid>

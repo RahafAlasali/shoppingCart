@@ -90,7 +90,7 @@ export default function nav() {
               edge="start"
               color="inherit"
               aria-label="open drawer"
-              sx={{ mr: 2 }}
+              sx={{ mr: { md: 2, xs: 0 } }}
               onClick={toggleDrawer("left", true)}
             >
               <MenuIcon />
@@ -108,7 +108,7 @@ export default function nav() {
             component={Link}
             to="/shoppingCart"
             color="inherit"
-            sx={{ mx: 1, fontSize: "larger" }}
+            sx={{ fontSize: { md: "larger", xs: "small" } }}
           >
             Store
           </Button>
@@ -141,7 +141,7 @@ export default function nav() {
               color="inherit"
               component={Link}
               to="/shoppingCart/loggin"
-              sx={{ mx: 2 }}
+              sx={{ mx: 2, fontSize: { sm: "larger", xs: "small" } }}
             >
               Login
             </Button>
@@ -151,7 +151,7 @@ export default function nav() {
               size="large"
               color="inherit"
               component={Link}
-              sx={{ mx: 2 }}
+              sx={{ mx: 2, fontSize: { sm: "larger", xs: "small" } }}
               onClick={() => logout()}
             >
               logout
