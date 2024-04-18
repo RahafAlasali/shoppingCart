@@ -144,9 +144,6 @@ export default function home() {
                 <Button
                   sx={{
                     display: { sm: "block", xs: "none" },
-                    "&:active": {
-                      backgroundColor: "red",
-                    },
                   }}
                   variant="outlined"
                   onClick={() => {

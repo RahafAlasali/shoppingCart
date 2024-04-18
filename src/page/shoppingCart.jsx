@@ -104,12 +104,12 @@ export default function shoppingCart() {
                   {products.map((itemCart) => {
                     return (
                       itemCart.id == item.id && (
-                        <Grid xs={10} sm={2} md={2} lg={2}>
-                          <Box>
+                        <Grid xs={10} sm={3} md={2} lg={2}>
+                          <Box textAlign="center">
                             <img
                               src={itemCart.image}
                               height={130}
-                              style={{ maxWidth: "95%" }}
+                              style={{ maxWidth: "95%", margin: "auto" }}
                             ></img>
                           </Box>
                         </Grid>
@@ -129,6 +129,7 @@ export default function shoppingCart() {
                       spacing={1}
                       display="flex"
                       alignItems="center"
+                      justifyContent="center"
                     >
                       <Grid xs={10} sm={7} md={7} lg={5}>
                         <Typography fontSize={20} textAlign={"center"}>
@@ -216,11 +217,26 @@ export default function shoppingCart() {
               <Divider sx={{ backgroundColor: "#e3dede" }} />
             </>
           ))}
-          <Box sx={{ display: "flex", justifyContent: "end", mt: 2 }}>
-            <Typography variant="h5" sx={{ mx: 1 }}>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "end",
+              alignItems: "center",
+              mt: 2,
+            }}
+          >
+            <Typography
+              variant="h5"
+              sx={{ mx: 1, fontSize: { md: "x-large", xs: "small" } }}
+            >
               Total : {total}
             </Typography>
-            <Button variant="contained">checkout</Button>
+            <Button
+              variant="contained"
+              sx={{ fontSize: { md: "large", xs: "x-small" } }}
+            >
+              checkout
+            </Button>
           </Box>
         </Box>
       </Container>
