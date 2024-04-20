@@ -74,11 +74,9 @@ export default function shoppingCart() {
     var total = shoppingCarts
       .map((item) => {
         return (
-          parseInt(
-            products.find((M) => {
-              return M.id == item.id;
-            })?.price
-          ) * item.quantity
+          products.find((M) => {
+            return M.id == item.id;
+          })?.price * item.quantity
         );
       })
       .reduce((accumulator, currentValue) => {
@@ -163,7 +161,7 @@ export default function shoppingCart() {
                         >
                           {products.map((itemCart) => {
                             return itemCart.id == item.id
-                              ? parseInt(itemCart.price)
+                              ? itemCart.price
                               : null;
                           })}
                         </Typography>
@@ -232,10 +230,10 @@ export default function shoppingCart() {
             }}
           >
             <Typography
-              variant="h5"
+              variant="h6"
               sx={{ mx: 1, fontSize: { md: "x-large", xs: "small" } }}
             >
-              Total : {total}
+              Total : ${total}
             </Typography>
             <Button
               variant="contained"

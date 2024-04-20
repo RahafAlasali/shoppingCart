@@ -77,9 +77,18 @@ export default function shoppingcart({ toggleDrawer }) {
                         <img src={itemP.image} height={75} width={75}></img>
                         <Box paddingX={2} maxWidth={200}>
                           <Typography>{itemP.title}</Typography>
-                          <Typography marginY={1}>
-                            {parseInt(itemP.price)} X {item.quantity}
-                          </Typography>
+                          <div marginY={1}>
+                            <Typography mr={1} sx={{ display: "inline-block" }}>
+                              ${itemP.price}
+                            </Typography>
+                            x
+                            <span
+                              className="text-muted"
+                              style={{ fontSize: ".8rem" }}
+                            >
+                              {item.quantity}
+                            </span>
+                          </div>
                         </Box>
                       </>
                     ) : null;

@@ -67,11 +67,9 @@ export default function home() {
     var total = shoppingCarts
       .map((item) => {
         return (
-          parseInt(
-            products.find((M) => {
-              return M.id == item.id;
-            })?.price
-          ) * item.quantity
+          products.find((M) => {
+            return M.id == item.id;
+          })?.price * item.quantity
         );
       })
       .reduce((accumulator, currentValue) => {

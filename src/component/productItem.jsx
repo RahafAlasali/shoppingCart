@@ -67,7 +67,7 @@ export default function productItem({
             fontWeight="bold"
             fontSize="large"
           >
-            ${parseInt(item.price)}
+            ${item.price}
           </Typography>
         </CardContent>
         <CardActions
