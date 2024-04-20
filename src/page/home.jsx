@@ -125,9 +125,6 @@ export default function home() {
     <>
       <Container>
         <Box sx={{ display: "flex", justifyContent: "center" }}>
-          {productsFilter.map((item) => (
-            <h1>{item.name}</h1>
-          ))}
           {products.length != 0 && (
             <Stack spacing={2} m={2} direction="row">
               <Button
@@ -160,15 +157,11 @@ export default function home() {
             </Stack>
           )}
         </Box>
-        <Box sx={{ width: "100%" }}>
-          <Grid
-            container
-            spacing={1}
-            justifyContent={{ xs: "center", md: "start" }}
-          >
+        <Box>
+          <Grid container justifyContent={{ xs: "center", sm: "start" }}>
             {productsFilter.length == 0
               ? products.map((item) => (
-                  <Grid xs={10} sm={6} md={5} lg={4}>
+                  <Grid xs={12} sm={6} md={4} lg={4}>
                     <Product
                       item={item}
                       shoppingCarts={shoppingCarts}
@@ -180,7 +173,7 @@ export default function home() {
                   </Grid>
                 ))
               : productsFilter.map((item) => (
-                  <Grid xs={10} sm={6} md={5} lg={4}>
+                  <Grid xs={12} sm={6} md={4} lg={4}>
                     <Product
                       item={item}
                       shoppingCarts={shoppingCarts}

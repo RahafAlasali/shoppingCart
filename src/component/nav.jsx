@@ -14,9 +14,10 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
+import Divider from "@mui/material/Divider";
 import Shoppingcart from "./shoppingcart.jsx";
 import { setLogin } from "../store/auth/index";
+import Typography from "@mui/material/Typography";
 
 export default function nav() {
   const quantityCartA = useSelector(
@@ -53,6 +54,7 @@ export default function nav() {
     { title: "Home", link: "/shoppingCart" },
     { title: "Cart", link: "/shoppingCart/cart" },
     { title: "Dashboard", link: "/shoppingCart/dashboard" },
+    { title: "About", link: "/shoppingCart" },
   ];
   const list = () => (
     <Box
@@ -63,14 +65,20 @@ export default function nav() {
     >
       <List sx={{ my: 3 }}>
         {listNav.map((item) => (
-          <ListItem key={item.title}>
-            <ListItemButton component={Link} to={item.link}>
-              <ListItemIcon>
-                <InboxIcon />
-              </ListItemIcon>
-              {item.title}
-            </ListItemButton>
-          </ListItem>
+          <>
+            <ListItem key={item.title}>
+              <ListItemButton
+                component={Link}
+                to={item.link}
+                sx={{ justifyContent: "center" }}
+              >
+                <Typography fontSize="x-large" fontWeight="600">
+                  {item.title}
+                </Typography>
+              </ListItemButton>
+            </ListItem>
+            <Divider width="70%" sx={{ mx: "auto !important" }} />
+          </>
         ))}
       </List>
     </Box>
@@ -140,7 +148,7 @@ export default function nav() {
               size="large"
               color="inherit"
               component={Link}
-              to="/shoppingCart/loggin"
+              to="/shoppingCart/login"
               sx={{ mx: 2, fontSize: { sm: "larger", xs: "small" } }}
             >
               Login

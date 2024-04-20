@@ -36,7 +36,7 @@ export const cartSlice = createSlice({
       state.shoppingCarts = state.shoppingCarts.filter(
         (item) => +item.id != +action.payload
       );
-      console.log("shoppingCarts", state.shoppingCarts);
+      // console.log("shoppingCarts", state.shoppingCarts);
     },
     addItemToCart: (state, action) => {
       state.shoppingCart.quantity += 1;

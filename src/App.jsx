@@ -3,7 +3,7 @@ import Home from "./page/home.jsx";
 import Layout from "./page/layout.jsx";
 import Shoppingcart from "./page/shoppingCart.jsx";
 import Dashboard from "./page/dashboard.jsx";
-import Loggin from "././component/loggin.jsx";
+import Login from "././component/login.jsx";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 
 const theme = createTheme({
@@ -23,7 +23,7 @@ export default function App() {
             <Route index element={<Home />} />
             <Route path="/shoppingCart/cart" element={<Shoppingcart />} />
             <Route path="/shoppingCart/dashboard" element={<Dashboard />} />
-            <Route path="/shoppingCart/loggin" element={<Loggin />} />
+            <Route path="/shoppingCart/login" element={<Login />} />
           </Route>
         </Routes>
       </ThemeProvider>
