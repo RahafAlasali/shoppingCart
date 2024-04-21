@@ -22,17 +22,12 @@ export default function shoppingcart({ toggleDrawer }) {
   const products = useSelector((state) => state.cart.products);
   const dispatch = useDispatch();
 
-  const subscribe = store.subscribe(() => {
-    console.log(
-      "store update ........... ",
-      store.getState().cart.shoppingCarts
-    );
-  });
-
   function removeFromCart(id) {
     dispatch(removeItemToCart(id));
-    var t = store.getState().cart.shoppingCarts;
-    localStorage.setItem("shoppingCarts", JSON.stringify(t));
+    localStorage.setItem(
+      "shoppingCarts",
+      JSON.stringify(store.getState().cart.shoppingCarts)
+    );
     localStorage.setItem("quantityCart", JSON.stringify(quantityCart - 1));
   }
 
@@ -114,7 +109,7 @@ export default function shoppingcart({ toggleDrawer }) {
           <Box py={2} sx={{ display: "flex", justifyContent: "space-between" }}>
             <Typography sx={{ fontSize: "larger" }}>Subtotal</Typography>
             <Typography sx={{ fontSize: "larger" }}>
-              {total.toLocaleString("en-US", {
+              {total?.toLocaleString("en-US", {
                 style: "currency",
                 currency: "USD",
               })}

@@ -12,7 +12,6 @@ import {
   setShoppingCartsArray,
   setTotal,
 } from "../store/cart";
-import { setLogin } from "../store/auth";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
@@ -36,19 +35,12 @@ export default function home() {
 
   useEffect(() => {
     (async () => {
-      if (localStorage.getItem("token")) {
-        dispatch(setLogin(true));
-      }
-
       await fetch("https://fakestoreapi.com/products")
         .then((response) => {
           return response.json();
         })
         .then((data) => {
           dispatch(setProductsArray(data));
-          var productsLocal = JSON.parse(localStorage.getItem("shoppingCarts"));
-
-          dispatch(setShoppingCartsArray(productsLocal));
         })
         .catch((error) => {});
     })();
@@ -62,19 +54,20 @@ export default function home() {
       .catch((error) => {});
   }, []);
   useEffect(() => {
-    var total = shoppingCarts
-      .map((item) => {
-        return (
-          products.find((M) => {
-            return M.id == item.id;
-          })?.price * item.quantity
-        );
-      })
-      .reduce((accumulator, currentValue) => {
-        return accumulator + currentValue;
-      }, 0);
+    if (products.length != 0)
+      var total = shoppingCarts
+        .map((item) => {
+          return (
+            products.find((M) => {
+              return M.id == item.id;
+            })?.price * item.quantity
+          );
+        })
+        .reduce((accumulator, currentValue) => {
+          return accumulator + currentValue;
+        }, 0);
     dispatch(setTotal(total));
-  }, [shoppingCarts]);
+  }, [products, shoppingCarts]);
 
   function handleAddToCart(id) {
     dispatch(addItemToCart(id));
@@ -87,11 +80,15 @@ export default function home() {
 
   function removeFromCart(id) {
     dispatch(removeItemToCart(id));
-    var t = store.getState().cart.shoppingCarts;
-    console.log(store.getState().cart.shoppingCarts);
-    localStorage.setItem("shoppingCarts", JSON.stringify(t));
+    localStorage.setItem(
+      "shoppingCarts",
+      JSON.stringify(store.getState().cart.shoppingCarts) // mutated
+    );
     localStorage.setItem("quantityCart", JSON.stringify(quantityCart - 1));
   }
+  const subscribe = store.subscribe(() => {
+    console.log("store update Home page ........... ", shoppingCarts);
+  });
 
   function handleIncrement(id) {
     dispatch(increment(id));

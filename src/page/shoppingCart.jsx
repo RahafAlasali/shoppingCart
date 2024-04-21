@@ -13,7 +13,6 @@ import {
   decrease,
   removeItemToCart,
   setProductsArray,
-  setShoppingCartsArray,
   setTotal,
 } from "../store/cart";
 import { useEffect, useState } from "react";
@@ -66,24 +65,23 @@ export default function shoppingCart() {
         .then((data) => {
           dispatch(setProductsArray(data));
         });
-      var arrayExisti = localStorage.getItem("shoppingCarts");
-      dispatch(setShoppingCartsArray(JSON.parse(arrayExisti)));
     })();
   }, []);
   useEffect(() => {
-    var total = shoppingCarts
-      .map((item) => {
-        return (
-          products.find((M) => {
-            return M.id == item.id;
-          })?.price * item.quantity
-        );
-      })
-      .reduce((accumulator, currentValue) => {
-        return accumulator + currentValue;
-      }, 0);
+    if (products.length != 0)
+      var total = shoppingCarts
+        .map((item) => {
+          return (
+            products.find((M) => {
+              return M.id == item.id;
+            })?.price * item.quantity
+          );
+        })
+        .reduce((accumulator, currentValue) => {
+          return accumulator + currentValue;
+        }, 0);
     dispatch(setTotal(total));
-  }, [shoppingCarts]);
+  }, [products, shoppingCarts]);
   return (
     <>
       <Container maxWidth="lg" sx={{ mb: 5 }}>
@@ -234,7 +232,7 @@ export default function shoppingCart() {
               sx={{ mx: 1, fontSize: { md: "x-large", xs: "small" } }}
             >
               Total :
-              {total.toLocaleString("en-US", {
+              {total?.toLocaleString("en-US", {
                 style: "currency",
                 currency: "USD",
               })}
