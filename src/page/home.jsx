@@ -10,7 +10,6 @@ import {
   removeItemToCart,
   setProductsArray,
   setShoppingCartsArray,
-  setQuantityCart,
   setTotal,
 } from "../store/cart";
 import { setLogin } from "../store/auth";
@@ -48,8 +47,7 @@ export default function home() {
         .then((data) => {
           dispatch(setProductsArray(data));
           var productsLocal = JSON.parse(localStorage.getItem("shoppingCarts"));
-          var quantityCart = JSON.parse(localStorage.getItem("quantityCart"));
-          dispatch(setQuantityCart(quantityCart));
+
           dispatch(setShoppingCartsArray(productsLocal));
         })
         .catch((error) => {});
