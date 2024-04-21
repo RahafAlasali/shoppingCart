@@ -145,7 +145,6 @@ export default function nav() {
           <Box sx={{ flexGrow: 1 }} />
           {!isLogin && (
             <Button
-              size="large"
               color="inherit"
               component={Link}
               to="/shoppingCart/login"
@@ -156,7 +155,6 @@ export default function nav() {
           )}
           {isLogin && (
             <Button
-              size="large"
               color="inherit"
               component={Link}
               sx={{ mx: 2, fontSize: { sm: "larger", xs: "small" } }}

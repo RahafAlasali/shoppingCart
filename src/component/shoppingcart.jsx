@@ -46,10 +46,13 @@ export default function shoppingcart({ toggleDrawer }) {
               justifyContent: "space-between",
             }}
           >
-            <Typography gutterBottom variant="h6">
+            <Typography gutterBottom variant="h6" fontWeight="bold">
               <Box pb={2}>Shopping Cart</Box>
             </Typography>
-            <Icon onClick={toggleDrawer("right", false)}>
+            <Icon
+              onClick={toggleDrawer("right", false)}
+              sx={{ "&:hover": { cursor: "pointer" } }}
+            >
               <CloseIcon />
             </Icon>
           </Box>
@@ -76,16 +79,19 @@ export default function shoppingcart({ toggleDrawer }) {
                       <>
                         <img src={itemP.image} height={75} width={75}></img>
                         <Box paddingX={2} maxWidth={200}>
-                          <Typography>{itemP.title}</Typography>
+                          <Typography variant="caption">
+                            {itemP.title}
+                          </Typography>
                           <div marginY={1}>
-                            <Typography mr={1} sx={{ display: "inline-block" }}>
+                            <Typography
+                              mr={1}
+                              mt={1}
+                              sx={{ display: "inline-block" }}
+                            >
                               ${itemP.price}
                             </Typography>
                             x
-                            <span
-                              className="text-muted"
-                              style={{ fontSize: ".8rem" }}
-                            >
+                            <span style={{ fontSize: ".8rem" }}>
                               {item.quantity}
                             </span>
                           </div>
@@ -94,7 +100,10 @@ export default function shoppingcart({ toggleDrawer }) {
                     ) : null;
                   })}
                 </Box>
-                <Icon onClick={() => removeFromCart(item.id)}>
+                <Icon
+                  onClick={() => removeFromCart(item.id)}
+                  sx={{ "&:hover": { cursor: "pointer" } }}
+                >
                   <CancelOutlinedIcon />
                 </Icon>
               </Box>
@@ -104,7 +113,12 @@ export default function shoppingcart({ toggleDrawer }) {
           <Divider />
           <Box py={2} sx={{ display: "flex", justifyContent: "space-between" }}>
             <Typography sx={{ fontSize: "larger" }}>Subtotal</Typography>
-            <Typography sx={{ fontSize: "larger" }}>$ {total}</Typography>
+            <Typography sx={{ fontSize: "larger" }}>
+              {total.toLocaleString("en-US", {
+                style: "currency",
+                currency: "USD",
+              })}
+            </Typography>
           </Box>
           <Divider />
         </Box>
