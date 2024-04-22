@@ -41,16 +41,18 @@ export default function shoppingCart() {
   }
   const subscribe = store.subscribe(() => console.log("The state is update"));
   useEffect(() => {
-    (async () => {
-      await fetch("https://fakestoreapi.com/products")
-        .then((response) => {
-          return response.json();
-        })
-        .then((data) => {
-          dispatch(setProductsArray(data));
-        });
-    })();
+    if (products.length == 0)
+      (async () => {
+        await fetch("https://fakestoreapi.com/products")
+          .then((response) => {
+            return response.json();
+          })
+          .then((data) => {
+            dispatch(setProductsArray(data));
+          });
+      })();
   }, []);
+
   useEffect(() => {
     if (products.length != 0) dispatch(setTotal());
   }, [products, shoppingCarts]);
@@ -59,6 +61,7 @@ export default function shoppingCart() {
     localStorage.setItem("shoppingCarts", JSON.stringify(shoppingCarts));
     localStorage.setItem("quantityCart", JSON.stringify(quantityCart));
   }, [shoppingCarts]);
+
   return (
     <>
       <Container maxWidth="lg" sx={{ mb: 5 }}>

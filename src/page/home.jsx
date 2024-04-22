@@ -9,7 +9,7 @@ import {
   addItemToCart,
   removeItemToCart,
   setProductsArray,
-  setShoppingCartsArray,
+  setCategoriesArray,
   setTotal,
 } from "../store/cart";
 import Button from "@mui/material/Button";
@@ -27,35 +27,41 @@ export default function home() {
     return state.cart.shoppingCart.quantity;
   });
   const [productsFilter, setProductsFilter] = useState([]);
-  const [categories, setCategories] = useState([]);
+  const categories = useSelector((state) => {
+    return state.cart.categories;
+  });
   const shoppingCarts = useSelector((state) => {
     return state.cart.shoppingCarts;
   });
   const dispatch = useDispatch();
 
   useEffect(() => {
-    (async () => {
-      await fetch("https://fakestoreapi.com/products")
+    if (products.length == 0)
+      (async () => {
+        await fetch("https://fakestoreapi.com/products")
+          .then((response) => {
+            return response.json();
+          })
+          .then((data) => {
+            dispatch(setProductsArray(data));
+          })
+          .catch((error) => {});
+      })();
+    if (categories.length == 0)
+      fetch("https://fakestoreapi.com/products/categories")
         .then((response) => {
           return response.json();
         })
         .then((data) => {
-          dispatch(setProductsArray(data));
+          dispatch(setCategoriesArray(data));
         })
         .catch((error) => {});
-    })();
-    fetch("https://fakestoreapi.com/products/categories")
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        setCategories(data);
-      })
-      .catch((error) => {});
   }, []);
+
   useEffect(() => {
     if (products.length != 0) dispatch(setTotal());
   }, [products, shoppingCarts]);
+
   useEffect(() => {
     localStorage.setItem("shoppingCarts", JSON.stringify(shoppingCarts));
     localStorage.setItem("quantityCart", JSON.stringify(quantityCart));
