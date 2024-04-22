@@ -9,7 +9,7 @@ import Typography from "@mui/material/Typography";
 import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
 import { store } from "../store";
-import { removeItemToCart, setTotal } from "../store/cart";
+import { removeItemToCart } from "../store/cart";
 
 export default function shoppingcart({ toggleDrawer }) {
   const shoppingCarts = useSelector((state) => {
@@ -24,12 +24,11 @@ export default function shoppingcart({ toggleDrawer }) {
 
   function removeFromCart(id) {
     dispatch(removeItemToCart(id));
-    localStorage.setItem(
-      "shoppingCarts",
-      JSON.stringify(store.getState().cart.shoppingCarts)
-    );
-    localStorage.setItem("quantityCart", JSON.stringify(quantityCart - 1));
   }
+  useEffect(() => {
+    localStorage.setItem("shoppingCarts", JSON.stringify(shoppingCarts));
+    localStorage.setItem("quantityCart", JSON.stringify(quantityCart));
+  }, [shoppingCarts]);
 
   return (
     <>

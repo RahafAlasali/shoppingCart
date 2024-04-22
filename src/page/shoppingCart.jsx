@@ -32,28 +32,12 @@ export default function shoppingCart() {
 
   function removeFromCart(id) {
     dispatch(removeItemToCart(id));
-    localStorage.setItem(
-      "shoppingCarts",
-      JSON.stringify(store.getState().cart.shoppingCarts)
-    );
-    localStorage.setItem(
-      "quantityCart",
-      JSON.stringify(store.getState().cart.shoppingCart.quantity)
-    );
   }
   function handleIncrement(id) {
     dispatch(increment(id));
-    localStorage.setItem(
-      "shoppingCarts",
-      JSON.stringify(store.getState().cart.shoppingCarts)
-    );
   }
   function handleDecrease(id) {
     dispatch(decrease(id));
-    localStorage.setItem(
-      "shoppingCarts",
-      JSON.stringify(store.getState().cart.shoppingCarts)
-    );
   }
   const subscribe = store.subscribe(() => console.log("The state is update"));
   useEffect(() => {
@@ -68,20 +52,13 @@ export default function shoppingCart() {
     })();
   }, []);
   useEffect(() => {
-    if (products.length != 0)
-      var total = shoppingCarts
-        .map((item) => {
-          return (
-            products.find((M) => {
-              return M.id == item.id;
-            })?.price * item.quantity
-          );
-        })
-        .reduce((accumulator, currentValue) => {
-          return accumulator + currentValue;
-        }, 0);
-    dispatch(setTotal(total));
+    if (products.length != 0) dispatch(setTotal());
   }, [products, shoppingCarts]);
+
+  useEffect(() => {
+    localStorage.setItem("shoppingCarts", JSON.stringify(shoppingCarts));
+    localStorage.setItem("quantityCart", JSON.stringify(quantityCart));
+  }, [shoppingCarts]);
   return (
     <>
       <Container maxWidth="lg" sx={{ mb: 5 }}>
