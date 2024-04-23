@@ -104,6 +104,7 @@ export default function home() {
                   display: { sm: "block", xs: "none" },
                   fontSize: { sm: "x-small", md: "small" },
                   ":hover": { backgroundColor: "#4e6378", color: "#FFF" },
+                  color: "#4e6378",
                 }}
                 disableRipple={true}
                 variant="contained"
@@ -120,6 +121,7 @@ export default function home() {
                     display: { sm: "block", xs: "none" },
                     fontSize: { sm: "x-small", md: "small" },
                     ":hover": { backgroundColor: "#4e6378", color: "#FFF" },
+                    color: "#4e6378",
                   }}
                   variant="contained"
                   onClick={() => {

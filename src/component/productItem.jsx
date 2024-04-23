@@ -25,6 +25,7 @@ export default function productItem({
     "&:hover": {
       backgroundColor: "#4e6378 !important",
       color: "#FFF",
+      border: "2px solid",
     },
   };
   var itemCart = shoppingCarts.find((itemCart) => {
@@ -110,7 +111,11 @@ export default function productItem({
                 -
               </Button>
 
-              {itemCart.quantity && <Box mx={1}>{itemCart.quantity}</Box>}
+              {itemCart.quantity && (
+                <Box mx={1} my="auto">
+                  {itemCart.quantity}
+                </Box>
+              )}
 
               <Button
                 variant="contained"
@@ -142,7 +147,7 @@ export default function productItem({
                 variant="contained"
                 sx={{
                   mx: 2,
-                  paddingX: 3,
+                  minWidth: "80px",
                   ...btnStyle,
                 }}
                 size="small"

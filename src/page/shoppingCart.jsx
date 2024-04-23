@@ -25,6 +25,7 @@ export default function shoppingCart() {
     "&:hover": {
       backgroundColor: "#4e6378 !important",
       color: "#FFF",
+      border: "2px solid",
     },
   };
   const shoppingCarts = useSelector((state) => {
@@ -193,8 +194,7 @@ export default function shoppingCart() {
                             sx={{
                               mx: 0.5,
                               mt: 1,
-                              minWidth: "unset",
-                              px: 3,
+                              minWidth: "50px",
                               ...btnStyle,
                             }}
                             onClick={() => handleDecrease(item.id)}
@@ -208,8 +208,7 @@ export default function shoppingCart() {
                             sx={{
                               mx: 0.5,
                               mt: 1,
-                              minWidth: "unset",
-                              px: 3,
+                              minWidth: "50px",
                               ...btnStyle,
                             }}
                             onClick={() => handleIncrement(item.id)}
@@ -221,6 +220,7 @@ export default function shoppingCart() {
                             variant="contained"
                             sx={{
                               mx: 0.5,
+                              minWidth: "50px",
                               mt: 1,
                               ...btnStyle,
                             }}
