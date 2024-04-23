@@ -96,10 +96,11 @@ export default function nav() {
             <IconButton
               size="large"
               edge="start"
-              color="inherit"
+              color="secondary"
               aria-label="open drawer"
               sx={{ mr: { md: 2, xs: 0 } }}
               onClick={toggleDrawer("left", true)}
+              disableRipple={true}
             >
               <MenuIcon />
             </IconButton>
@@ -115,7 +116,7 @@ export default function nav() {
           <Button
             component={Link}
             to="/shoppingCart"
-            color="inherit"
+            color="secondary"
             sx={{
               fontSize: { md: "larger", xs: "small" },
               ":hover": { backgroundColor: "transparent" },
@@ -128,22 +129,34 @@ export default function nav() {
             <Button
               component={NavLink}
               to="/shoppingCart"
-              color="inherit"
-              sx={{ mx: 2, ":hover": { backgroundColor: "transparent" } }}
+              color="secondary"
+              sx={{
+                mx: 2,
+                ":hover": { backgroundColor: "transparent" },
+                fontSize: { md: "larger", xs: "small" },
+              }}
             >
               Home
             </Button>
             <Button
-              color="inherit"
+              color="secondary"
               component={NavLink}
               to="/shoppingCart/cart"
-              sx={{ mx: 2, ":hover": { backgroundColor: "transparent" } }}
+              sx={{
+                mx: 2,
+                ":hover": { backgroundColor: "transparent" },
+                fontSize: { md: "larger", xs: "small" },
+              }}
             >
               Cart
             </Button>
             <Button
-              color="inherit"
-              sx={{ mx: 2, ":hover": { backgroundColor: "transparent" } }}
+              color="secondary"
+              sx={{
+                mx: 2,
+                ":hover": { backgroundColor: "transparent" },
+                fontSize: { md: "larger", xs: "small" },
+              }}
             >
               About
             </Button>
@@ -151,7 +164,7 @@ export default function nav() {
           <Box sx={{ flexGrow: 1 }} />
           {!isLogin && (
             <Button
-              color="inherit"
+              color="secondary"
               component={Link}
               to="/shoppingCart/login"
               sx={{
@@ -165,7 +178,7 @@ export default function nav() {
           )}
           {isLogin && (
             <Button
-              color="inherit"
+              color="secondary"
               component={Link}
               sx={{
                 mx: 2,
@@ -181,8 +194,9 @@ export default function nav() {
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <IconButton
               size="large"
-              color="inherit"
+              color="secondary"
               onClick={toggleDrawer("right", true)}
+              disableRipple={true}
             >
               <Badge badgeContent={quantityCart} color="secondary">
                 <ShoppingCartIcon />
