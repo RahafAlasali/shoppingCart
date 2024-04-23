@@ -7,6 +7,8 @@ import { store } from "../store/index";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
 import DeleteIcon from "@mui/icons-material/Delete";
+import AddIcon from "@mui/icons-material/Add";
+import HorizontalRule from "@mui/icons-material/HorizontalRule";
 
 import {
   increment,
@@ -200,7 +202,7 @@ export default function shoppingCart() {
                             onClick={() => handleDecrease(item.id)}
                             disabled={item.quantity > 1 ? false : true}
                           >
-                            -
+                            <HorizontalRule />
                           </Button>
                           <Button
                             variant="contained"
@@ -213,7 +215,7 @@ export default function shoppingCart() {
                             }}
                             onClick={() => handleIncrement(item.id)}
                           >
-                            +
+                            <AddIcon />
                           </Button>
 
                           <Button
@@ -227,7 +229,7 @@ export default function shoppingCart() {
                             size="small"
                             onClick={() => removeFromCart(item.id)}
                           >
-                            <DeleteIcon fontSize="small" />
+                            <DeleteIcon />
                           </Button>
                         </Grid>
                       </Grid>

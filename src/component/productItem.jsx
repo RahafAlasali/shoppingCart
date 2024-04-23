@@ -9,6 +9,8 @@ import Box from "@mui/material/Box";
 import Rating from "@mui/material/Rating";
 import AddShoppingCart from "@mui/icons-material/AddShoppingCart";
 import DeleteIcon from "@mui/icons-material/Delete";
+import AddIcon from "@mui/icons-material/Add";
+import HorizontalRule from "@mui/icons-material/HorizontalRule";
 
 export default function productItem({
   item,
@@ -102,37 +104,36 @@ export default function productItem({
                 variant="contained"
                 size="small"
                 sx={{
-                  padding: 0,
+                  mx: 1,
+                  minWidth: "40px",
                   ...btnStyle,
                 }}
                 onClick={() => handleDecrease(item.id)}
                 disabled={itemCart.quantity > 1 ? false : true}
               >
-                -
+                <HorizontalRule />
               </Button>
 
-              {itemCart.quantity && (
-                <Box mx={1} my="auto">
-                  {itemCart.quantity}
-                </Box>
-              )}
+              {itemCart.quantity && <Box my="auto">{itemCart.quantity}</Box>}
 
               <Button
                 variant="contained"
                 size="small"
                 sx={{
-                  padding: 0,
+                  mx: 1,
+                  minWidth: "40px",
                   ...btnStyle,
                 }}
                 onClick={() => handleIncrement(item.id)}
               >
-                +
+                <AddIcon />
               </Button>
 
               <Button
                 variant="contained"
                 sx={{
                   mx: 1,
+                  minWidth: "40px",
                   ...btnStyle,
                 }}
                 size="small"
@@ -147,7 +148,6 @@ export default function productItem({
                 variant="contained"
                 sx={{
                   mx: 2,
-                  minWidth: "80px",
                   ...btnStyle,
                 }}
                 size="small"
