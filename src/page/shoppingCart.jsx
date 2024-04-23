@@ -18,6 +18,15 @@ import {
 import { useEffect, useState } from "react";
 
 export default function shoppingCart() {
+  const btnStyle = {
+    color: "#425068",
+    background: "#FFF",
+    border: "2px solid",
+    "&:hover": {
+      backgroundColor: "#4e6378 !important",
+      color: "#FFF",
+    },
+  };
   const shoppingCarts = useSelector((state) => {
     return state.cart.shoppingCarts;
   });
@@ -73,18 +82,18 @@ export default function shoppingCart() {
           Cart
         </Typography>
         <Box sx={{ m: 2 }}>
-          {shoppingCarts.map((item) => (
-            <>
-              <Box
-                key={item.id}
-                sx={{
-                  marginY: "15px",
-                }}
-              >
-                <Grid container spacing={1} justifyContent="center">
-                  {products.map((itemCart) => {
-                    return (
-                      itemCart.id == item.id && (
+          {shoppingCarts.map((item) => {
+            return products.map((itemCart) => {
+              return (
+                itemCart.id == item.id && (
+                  <>
+                    <Box
+                      key={item.id}
+                      sx={{
+                        marginY: "15px",
+                      }}
+                    >
+                      <Grid container spacing={1} justifyContent="center">
                         <Grid xs={10} sm={2} md={2} lg={2}>
                           <Box textAlign="center">
                             <img
@@ -94,111 +103,141 @@ export default function shoppingCart() {
                             ></img>
                           </Box>
                         </Grid>
-                      )
-                    );
-                  })}
-                  <Grid
-                    xs={12}
-                    sm={6}
-                    md={7}
-                    lg={7}
-                    display="flex"
-                    alignItems="center"
-                  >
-                    <Grid
-                      container
-                      spacing={1}
-                      display="flex"
-                      alignItems="start"
-                      justifyContent="center"
-                    >
-                      <Grid xs={10} sm={7} md={7} lg={5} mt={{ xs: 2, md: 0 }}>
-                        <Typography fontSize={20} textAlign={"center"}>
-                          Product
-                        </Typography>
-                        <Typography
-                          variant="subtitle2"
-                          component="div"
-                          textAlign={"center"}
-                        >
-                          {products.map((itemA) => {
-                            return itemA.id == item.id ? itemA.title : null;
-                          })}
-                        </Typography>
-                      </Grid>
 
-                      <Grid xs={10} sm={2} md={2} lg={2} mt={{ xs: 2, md: 0 }}>
-                        <Typography fontSize={20} textAlign={"center"}>
-                          Price
-                        </Typography>
-                        <Typography
-                          variant="subtitle2"
-                          component="div"
-                          sx={{ margin: "auto" }}
-                          textAlign={"center"}
+                        <Grid
+                          xs={12}
+                          sm={6}
+                          md={7}
+                          lg={7}
+                          display="flex"
+                          alignItems="center"
                         >
-                          {products.map((itemCart) => {
-                            return itemCart.id == item.id
-                              ? itemCart.price
-                              : null;
-                          })}
-                        </Typography>
-                      </Grid>
+                          <Grid
+                            container
+                            spacing={1}
+                            display="flex"
+                            alignItems="start"
+                            justifyContent="center"
+                          >
+                            <Grid
+                              xs={10}
+                              sm={7}
+                              md={7}
+                              lg={5}
+                              mt={{ xs: 2, md: 0 }}
+                            >
+                              <Typography fontSize={20} textAlign={"center"}>
+                                Product
+                              </Typography>
+                              <Typography
+                                variant="subtitle2"
+                                component="div"
+                                textAlign={"center"}
+                              >
+                                {itemCart.title}
+                              </Typography>
+                            </Grid>
 
-                      <Grid xs={10} sm={2} md={2} lg={2} mt={{ xs: 2, md: 0 }}>
-                        <Typography fontSize={20} textAlign={"center"}>
-                          Quantity
-                        </Typography>
-                        <Typography
-                          variant="subtitle2"
-                          textAlign={"center"}
-                          component="div"
+                            <Grid
+                              xs={10}
+                              sm={2}
+                              md={2}
+                              lg={2}
+                              mt={{ xs: 2, md: 0 }}
+                            >
+                              <Typography fontSize={20} textAlign={"center"}>
+                                Price
+                              </Typography>
+                              <Typography
+                                variant="subtitle2"
+                                component="div"
+                                sx={{ margin: "auto" }}
+                                textAlign={"center"}
+                              >
+                                {itemCart.price}
+                              </Typography>
+                            </Grid>
+
+                            <Grid
+                              xs={10}
+                              sm={2}
+                              md={2}
+                              lg={2}
+                              mt={{ xs: 2, md: 0 }}
+                            >
+                              <Typography fontSize={20} textAlign={"center"}>
+                                Quantity
+                              </Typography>
+                              <Typography
+                                variant="subtitle2"
+                                textAlign={"center"}
+                                component="div"
+                              >
+                                {item.quantity}
+                              </Typography>
+                            </Grid>
+                          </Grid>
+                        </Grid>
+                        <Grid
+                          xs={12}
+                          sm={4}
+                          md={3}
+                          lg={3}
+                          display="flex"
+                          alignItems="center"
+                          justifyContent="center"
                         >
-                          {item.quantity}
-                        </Typography>
-                      </Grid>
-                    </Grid>
-                  </Grid>
-                  <Grid
-                    xs={12}
-                    sm={4}
-                    md={3}
-                    lg={3}
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="center"
-                  >
-                    <Button
-                      variant="contained"
-                      size="small"
-                      sx={{ mx: 0.5, mt: 1, minWidth: "unset", px: 3 }}
-                      onClick={() => handleDecrease(item.id)}
-                    >
-                      -
-                    </Button>
-                    <Button
-                      variant="contained"
-                      size="small"
-                      sx={{ mx: 0.5, mt: 1, minWidth: "unset", px: 3 }}
-                      onClick={() => handleIncrement(item.id)}
-                    >
-                      +
-                    </Button>
+                          <Button
+                            variant="contained"
+                            size="small"
+                            sx={{
+                              mx: 0.5,
+                              mt: 1,
+                              minWidth: "unset",
+                              px: 3,
+                              ...btnStyle,
+                            }}
+                            onClick={() => handleDecrease(item.id)}
+                            disabled={item.quantity > 1 ? false : true}
+                          >
+                            -
+                          </Button>
+                          <Button
+                            variant="contained"
+                            size="small"
+                            sx={{
+                              mx: 0.5,
+                              mt: 1,
+                              minWidth: "unset",
+                              px: 3,
+                              ...btnStyle,
+                            }}
+                            onClick={() => handleIncrement(item.id)}
+                          >
+                            +
+                          </Button>
 
-                    <Button
-                      variant="contained"
-                      sx={{ mx: 0.5, mt: 1 }}
-                      size="small"
-                      onClick={() => removeFromCart(item.id)}
-                    >
-                      <DeleteIcon fontSize="small" />
-                    </Button>
-                  </Grid>
-                </Grid>
-              </Box>
-              <Divider sx={{ backgroundColor: "#e3dede" }} />
-            </>
-          ))}
+                          <Button
+                            variant="contained"
+                            sx={{
+                              mx: 0.5,
+                              mt: 1,
+                              ...btnStyle,
+                            }}
+                            size="small"
+                            onClick={() => removeFromCart(item.id)}
+                          >
+                            <DeleteIcon fontSize="small" />
+                          </Button>
+                        </Grid>
+                      </Grid>
+                    </Box>
+                    <Divider sx={{ backgroundColor: "#e3dede" }} />
+                  </>
+                )
+              );
+            });
+          })}
           <Box
             sx={{
               display: "flex",
@@ -217,12 +256,12 @@ export default function shoppingCart() {
                 currency: "USD",
               })}
             </Typography>
-            <Button
+            {/* <Button
               variant="contained"
               sx={{ fontSize: { md: "large", xs: "x-small" } }}
             >
               checkout
-            </Button>
+            </Button> */}
           </Box>
         </Box>
       </Container>

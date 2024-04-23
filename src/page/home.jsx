@@ -2,7 +2,6 @@ import React, { useLayoutEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import Container from "@mui/material/Container";
-
 import {
   increment,
   decrease,
@@ -104,7 +103,9 @@ export default function home() {
                 sx={{
                   display: { sm: "block", xs: "none" },
                   fontSize: { sm: "x-small", md: "small" },
+                  ":hover": { backgroundColor: "#4e6378", color: "#FFF" },
                 }}
+                disableRipple={true}
                 variant="contained"
                 onClick={() => {
                   handelFilter("all");
@@ -118,11 +119,13 @@ export default function home() {
                   sx={{
                     display: { sm: "block", xs: "none" },
                     fontSize: { sm: "x-small", md: "small" },
+                    ":hover": { backgroundColor: "#4e6378", color: "#FFF" },
                   }}
-                  variant="outlined"
+                  variant="contained"
                   onClick={() => {
                     handelFilter(item);
                   }}
+                  disableRipple={true}
                 >
                   {item}
                 </Button>

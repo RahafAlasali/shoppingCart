@@ -13,6 +13,7 @@ export const cartSlice = createSlice({
   initialState,
   reducers: {
     increment: (state, action) => {
+      state.shoppingCart.quantity += 1;
       state.shoppingCarts = state.shoppingCarts.map((item) => {
         if (item.id == +action.payload)
           return { id: +action.payload, quantity: item.quantity + 1 };
@@ -20,6 +21,7 @@ export const cartSlice = createSlice({
       });
     },
     decrease: (state, action) => {
+      state.shoppingCart.quantity -= 1;
       state.shoppingCarts = state.shoppingCarts.map((item) => {
         if (item.id == +action.payload)
           return { id: +action.payload, quantity: item.quantity - 1 };
@@ -33,7 +35,10 @@ export const cartSlice = createSlice({
       state.shoppingCart.quantity -= 1;
     },
     removeItemToCart: (state, action) => {
-      state.shoppingCart.quantity -= 1;
+      state.shoppingCart.quantity -= state.shoppingCarts.find(
+        (item) => item.id == action.payload
+      ).quantity;
+
       state.shoppingCarts = state.shoppingCarts.filter(
         (item) => +item.id != +action.payload
       );

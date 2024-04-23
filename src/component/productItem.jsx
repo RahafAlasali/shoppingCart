@@ -7,6 +7,8 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Rating from "@mui/material/Rating";
+import AddShoppingCart from "@mui/icons-material/AddShoppingCart";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 export default function productItem({
   item,
@@ -16,7 +18,19 @@ export default function productItem({
   handleAddToCart,
   removeFromCart,
 }) {
-  // const [value, setValue] = item.rating.rate;
+  const btnStyle = {
+    color: "#425068",
+    background: "#FFF",
+    border: "2px solid",
+    "&:hover": {
+      backgroundColor: "#4e6378 !important",
+      color: "#FFF",
+    },
+  };
+  var itemCart = shoppingCarts.find((itemCart) => {
+    return itemCart.id == item.id;
+  });
+
   return (
     <>
       <Card
@@ -76,7 +90,7 @@ export default function productItem({
             justifyContent: "center",
           }}
         >
-          {shoppingCarts.map((item) => item.id).includes(item.id) ? (
+          {itemCart ? (
             <Box
               sx={{
                 display: "flex",
@@ -86,20 +100,25 @@ export default function productItem({
               <Button
                 variant="contained"
                 size="small"
-                sx={{ padding: 0 }}
+                sx={{
+                  padding: 0,
+                  ...btnStyle,
+                }}
                 onClick={() => handleDecrease(item.id)}
+                disabled={itemCart.quantity > 1 ? false : true}
               >
                 -
               </Button>
-              <Box mx={1}>
-                {shoppingCarts.map((itemCart) => {
-                  return itemCart.id == item.id ? itemCart.quantity : null;
-                })}
-              </Box>
+
+              {itemCart.quantity && <Box mx={1}>{itemCart.quantity}</Box>}
+
               <Button
                 variant="contained"
                 size="small"
-                sx={{ padding: 0 }}
+                sx={{
+                  padding: 0,
+                  ...btnStyle,
+                }}
                 onClick={() => handleIncrement(item.id)}
               >
                 +
@@ -107,22 +126,29 @@ export default function productItem({
 
               <Button
                 variant="contained"
-                sx={{ mx: 1 }}
+                sx={{
+                  mx: 1,
+                  ...btnStyle,
+                }}
                 size="small"
                 onClick={() => removeFromCart(item.id)}
               >
-                remove
+                <DeleteIcon />
               </Button>
             </Box>
           ) : (
             <Box>
               <Button
                 variant="contained"
-                sx={{ mx: 2, paddingX: 3 }}
+                sx={{
+                  mx: 2,
+                  paddingX: 3,
+                  ...btnStyle,
+                }}
                 size="small"
                 onClick={() => handleAddToCart(item.id)}
               >
-                Add to card
+                <AddShoppingCart />
               </Button>
             </Box>
           )}

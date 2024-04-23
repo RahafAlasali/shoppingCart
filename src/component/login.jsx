@@ -19,6 +19,15 @@ import { useDispatch } from "react-redux";
 import { setLogin } from "../store/auth";
 
 export default function login() {
+  const btnStyle = {
+    color: "#425068",
+    background: "#FFF",
+    border: "2px solid",
+    "&:hover": {
+      backgroundColor: "#4e6378 !important",
+      color: "#FFF",
+    },
+  };
   const [showPassword, setShowPassword] = React.useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -91,7 +100,12 @@ export default function login() {
                 />
               </FormControl>
               <CardActions sx={{ marginTop: 4, padding: 0 }}>
-                <Button type="submit" variant="contained" fullWidth>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  fullWidth
+                  sx={{ ...btnStyle, fontWeight: "bold" }}
+                >
                   Login
                 </Button>
               </CardActions>

@@ -116,7 +116,10 @@ export default function nav() {
             component={Link}
             to="/shoppingCart"
             color="inherit"
-            sx={{ fontSize: { md: "larger", xs: "small" } }}
+            sx={{
+              fontSize: { md: "larger", xs: "small" },
+              ":hover": { backgroundColor: "transparent" },
+            }}
           >
             Store
           </Button>
@@ -126,7 +129,7 @@ export default function nav() {
               component={NavLink}
               to="/shoppingCart"
               color="inherit"
-              sx={{ mx: 2 }}
+              sx={{ mx: 2, ":hover": { backgroundColor: "transparent" } }}
             >
               Home
             </Button>
@@ -134,11 +137,14 @@ export default function nav() {
               color="inherit"
               component={NavLink}
               to="/shoppingCart/cart"
-              sx={{ mx: 2 }}
+              sx={{ mx: 2, ":hover": { backgroundColor: "transparent" } }}
             >
               Cart
             </Button>
-            <Button color="inherit" sx={{ mx: 2 }}>
+            <Button
+              color="inherit"
+              sx={{ mx: 2, ":hover": { backgroundColor: "transparent" } }}
+            >
               About
             </Button>
           </Box>
@@ -148,7 +154,11 @@ export default function nav() {
               color="inherit"
               component={Link}
               to="/shoppingCart/login"
-              sx={{ mx: 2, fontSize: { sm: "larger", xs: "small" } }}
+              sx={{
+                mx: 2,
+                fontSize: { sm: "larger", xs: "small" },
+                ":hover": { backgroundColor: "transparent" },
+              }}
             >
               Login
             </Button>
@@ -157,7 +167,12 @@ export default function nav() {
             <Button
               color="inherit"
               component={Link}
-              sx={{ mx: 2, fontSize: { sm: "larger", xs: "small" } }}
+              sx={{
+                mx: 2,
+                fontSize: { sm: "larger", xs: "small" },
+                ":hover": { backgroundColor: "transparent" },
+                ":focus": { backgroundColor: "transparent" },
+              }}
               onClick={() => logout()}
             >
               logout

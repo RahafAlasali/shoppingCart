@@ -12,6 +12,15 @@ import { store } from "../store";
 import { removeItemToCart } from "../store/cart";
 
 export default function shoppingcart({ toggleDrawer }) {
+  const btnStyle = {
+    color: "#425068",
+    background: "#FFF",
+    border: "2px solid",
+    "&:hover": {
+      backgroundColor: "#4e6378 !important",
+      color: "#FFF",
+    },
+  };
   const shoppingCarts = useSelector((state) => {
     return state.cart.shoppingCarts;
   });
@@ -121,7 +130,13 @@ export default function shoppingcart({ toggleDrawer }) {
             <Button
               variant="contained"
               fullWidth
-              sx={{ padding: 1, paddingX: 1, marginTop: 2, minWidth: 300 }}
+              sx={{
+                padding: 1,
+                paddingX: 1,
+                marginTop: 2,
+                minWidth: 300,
+                ...btnStyle,
+              }}
               component={Link}
               to="/shoppingCart/cart"
               onClick={toggleDrawer("right", false)}
@@ -129,7 +144,7 @@ export default function shoppingcart({ toggleDrawer }) {
               View Cart
             </Button>
           </Box>
-          <Box>
+          {/* <Box>
             <Button
               variant="contained"
               fullWidth
@@ -138,7 +153,7 @@ export default function shoppingcart({ toggleDrawer }) {
             >
               checkout
             </Button>
-          </Box>
+          </Box> */}
         </Box>
       </Box>
     </>
