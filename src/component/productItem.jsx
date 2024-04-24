@@ -43,6 +43,7 @@ export default function productItem({
           m: 1,
           display: "inline-block",
         }}
+        elevation={2}
       >
         <CardMedia
           sx={{

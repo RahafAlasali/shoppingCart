@@ -73,9 +73,9 @@ export default function home() {
   function removeFromCart(id) {
     dispatch(removeItemToCart(id));
   }
-  const subscribe = store.subscribe(() => {
-    console.log("store update Home page ........... ", shoppingCarts);
-  });
+  // const subscribe = store.subscribe(() => {
+  //   console.log("Home ", shoppingCarts);
+  // });
 
   function handleIncrement(id) {
     dispatch(increment(id));

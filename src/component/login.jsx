@@ -35,7 +35,6 @@ export default function login() {
   const dispatch = useDispatch();
   function onSubmit(e) {
     e.preventDefault();
-    console.log(e.target.username.value, "Form");
     fetch("https://fakestoreapi.com/auth/login", {
       method: "POST",
       body: JSON.stringify({

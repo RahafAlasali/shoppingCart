@@ -72,7 +72,10 @@ export default function nav() {
                 to={item.link}
                 sx={{ justifyContent: "center" }}
               >
-                <Typography fontSize="x-large" fontWeight="600">
+                <Typography
+                  fontSize={{ sm: "x-large", xs: "large" }}
+                  fontWeight="600"
+                >
                   {item.title}
                 </Typography>
               </ListItemButton>
