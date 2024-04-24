@@ -41,6 +41,8 @@ export default function shoppingCart() {
   });
   const quantityCart = useSelector((state) => state.cart.shoppingCart.quantity);
   const dispatch = useDispatch();
+  var cartIds = shoppingCarts.map((item) => item.id);
+  var productsCart = products.filter((itemPrd) => cartIds.includes(itemPrd.id));
 
   function removeFromCart(id) {
     dispatch(removeItemToCart(id));
@@ -51,7 +53,7 @@ export default function shoppingCart() {
   function handleDecrease(id) {
     dispatch(decrease(id));
   }
-  const subscribe = store.subscribe(() => console.log("The state is update"));
+  // const subscribe = store.subscribe(() => console.log("The state is update"));
   useEffect(() => {
     if (products.length == 0)
       (async () => {
@@ -85,160 +87,165 @@ export default function shoppingCart() {
           Cart
         </Typography>
         <Box sx={{ m: 2 }}>
-          {shoppingCarts.map((item) => {
-            return products.map((itemCart) => {
-              return (
-                itemCart.id == item.id && (
-                  <>
-                    <Box
-                      key={item.id}
-                      sx={{
-                        marginY: "15px",
-                      }}
+          {productsCart.map((itemCart) => {
+            return (
+              <>
+                <Box
+                  key={itemCart.id}
+                  sx={{
+                    marginY: "15px",
+                  }}
+                >
+                  <Grid container spacing={1} justifyContent="center">
+                    <Grid xs={10} sm={2} md={2} lg={2}>
+                      <Box textAlign="center">
+                        <img
+                          src={itemCart.image}
+                          height={130}
+                          style={{ maxWidth: "95%", margin: "auto" }}
+                        ></img>
+                      </Box>
+                    </Grid>
+
+                    <Grid
+                      xs={12}
+                      sm={6}
+                      md={7}
+                      lg={7}
+                      display="flex"
+                      alignItems="center"
                     >
-                      <Grid container spacing={1} justifyContent="center">
-                        <Grid xs={10} sm={2} md={2} lg={2}>
-                          <Box textAlign="center">
-                            <img
-                              src={itemCart.image}
-                              height={130}
-                              style={{ maxWidth: "95%", margin: "auto" }}
-                            ></img>
-                          </Box>
-                        </Grid>
-
+                      <Grid
+                        container
+                        spacing={1}
+                        display="flex"
+                        alignItems="start"
+                        justifyContent="center"
+                      >
                         <Grid
-                          xs={12}
-                          sm={6}
+                          xs={10}
+                          sm={7}
                           md={7}
-                          lg={7}
-                          display="flex"
-                          alignItems="center"
+                          lg={5}
+                          mt={{ xs: 2, md: 0 }}
                         >
-                          <Grid
-                            container
-                            spacing={1}
-                            display="flex"
-                            alignItems="start"
-                            justifyContent="center"
+                          <Typography fontSize={20} textAlign={"center"}>
+                            Product
+                          </Typography>
+                          <Typography
+                            variant="subtitle2"
+                            component="div"
+                            textAlign={"center"}
                           >
-                            <Grid
-                              xs={10}
-                              sm={7}
-                              md={7}
-                              lg={5}
-                              mt={{ xs: 2, md: 0 }}
-                            >
-                              <Typography fontSize={20} textAlign={"center"}>
-                                Product
-                              </Typography>
-                              <Typography
-                                variant="subtitle2"
-                                component="div"
-                                textAlign={"center"}
-                              >
-                                {itemCart.title}
-                              </Typography>
-                            </Grid>
-
-                            <Grid
-                              xs={10}
-                              sm={2}
-                              md={2}
-                              lg={2}
-                              mt={{ xs: 2, md: 0 }}
-                            >
-                              <Typography fontSize={20} textAlign={"center"}>
-                                Price
-                              </Typography>
-                              <Typography
-                                variant="subtitle2"
-                                component="div"
-                                sx={{ margin: "auto" }}
-                                textAlign={"center"}
-                              >
-                                {itemCart.price}
-                              </Typography>
-                            </Grid>
-
-                            <Grid
-                              xs={10}
-                              sm={2}
-                              md={2}
-                              lg={2}
-                              mt={{ xs: 2, md: 0 }}
-                            >
-                              <Typography fontSize={20} textAlign={"center"}>
-                                Quantity
-                              </Typography>
-                              <Typography
-                                variant="subtitle2"
-                                textAlign={"center"}
-                                component="div"
-                              >
-                                {item.quantity}
-                              </Typography>
-                            </Grid>
-                          </Grid>
+                            {itemCart.title}
+                          </Typography>
                         </Grid>
-                        <Grid
-                          xs={12}
-                          sm={4}
-                          md={3}
-                          lg={3}
-                          display="flex"
-                          alignItems="center"
-                          justifyContent="center"
-                        >
-                          <Button
-                            variant="contained"
-                            size="small"
-                            sx={{
-                              mx: 0.5,
-                              mt: 1,
-                              minWidth: "50px",
-                              ...btnStyle,
-                            }}
-                            onClick={() => handleDecrease(item.id)}
-                            disabled={item.quantity > 1 ? false : true}
-                          >
-                            <HorizontalRule />
-                          </Button>
-                          <Button
-                            variant="contained"
-                            size="small"
-                            sx={{
-                              mx: 0.5,
-                              mt: 1,
-                              minWidth: "50px",
-                              ...btnStyle,
-                            }}
-                            onClick={() => handleIncrement(item.id)}
-                          >
-                            <AddIcon />
-                          </Button>
 
-                          <Button
-                            variant="contained"
-                            sx={{
-                              mx: 0.5,
-                              minWidth: "50px",
-                              mt: 1,
-                              ...btnStyle,
-                            }}
-                            size="small"
-                            onClick={() => removeFromCart(item.id)}
+                        <Grid
+                          xs={10}
+                          sm={2}
+                          md={2}
+                          lg={2}
+                          mt={{ xs: 2, md: 0 }}
+                        >
+                          <Typography fontSize={20} textAlign={"center"}>
+                            Price
+                          </Typography>
+                          <Typography
+                            variant="subtitle2"
+                            component="div"
+                            sx={{ margin: "auto" }}
+                            textAlign={"center"}
                           >
-                            <DeleteIcon />
-                          </Button>
+                            {itemCart.price}
+                          </Typography>
+                        </Grid>
+
+                        <Grid
+                          xs={10}
+                          sm={2}
+                          md={2}
+                          lg={2}
+                          mt={{ xs: 2, md: 0 }}
+                        >
+                          <Typography fontSize={20} textAlign={"center"}>
+                            Quantity
+                          </Typography>
+                          <Typography
+                            variant="subtitle2"
+                            textAlign={"center"}
+                            component="div"
+                          >
+                            {
+                              shoppingCarts.find(
+                                (item) => item.id == itemCart.id
+                              ).quantity
+                            }
+                          </Typography>
                         </Grid>
                       </Grid>
-                    </Box>
-                    <Divider sx={{ backgroundColor: "#e3dede" }} />
-                  </>
-                )
-              );
-            });
+                    </Grid>
+                    <Grid
+                      xs={12}
+                      sm={4}
+                      md={3}
+                      lg={3}
+                      display="flex"
+                      alignItems="center"
+                      justifyContent="center"
+                    >
+                      <Button
+                        variant="contained"
+                        size="small"
+                        sx={{
+                          mx: 0.5,
+                          mt: 1,
+                          minWidth: "50px",
+                          ...btnStyle,
+                        }}
+                        onClick={() => handleDecrease(itemCart.id)}
+                        disabled={
+                          shoppingCarts.find((item) => item.id == itemCart.id)
+                            .quantity > 1
+                            ? false
+                            : true
+                        }
+                      >
+                        <HorizontalRule />
+                      </Button>
+                      <Button
+                        variant="contained"
+                        size="small"
+                        sx={{
+                          mx: 0.5,
+                          mt: 1,
+                          minWidth: "50px",
+                          ...btnStyle,
+                        }}
+                        onClick={() => handleIncrement(itemCart.id)}
+                      >
+                        <AddIcon />
+                      </Button>
+
+                      <Button
+                        variant="contained"
+                        sx={{
+                          mx: 0.5,
+                          minWidth: "50px",
+                          mt: 1,
+                          ...btnStyle,
+                        }}
+                        size="small"
+                        onClick={() => removeFromCart(itemCart.id)}
+                      >
+                        <DeleteIcon />
+                      </Button>
+                    </Grid>
+                  </Grid>
+                </Box>
+                <Divider sx={{ backgroundColor: "#e3dede" }} />
+              </>
+            );
           })}
           <Box
             sx={{
